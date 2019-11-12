@@ -13,13 +13,8 @@ public abstract class BaseNode
 
     private NodeState currentState;
 
-    // Leaf nodes for e.g. Sequences or Selectors
-    private List<BaseNode> leafNodes;
-
     public BaseNode()
-    {
-
-    }
+    {}
 
     public abstract void Evaluate();
 }

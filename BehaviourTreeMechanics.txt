@@ -1,0 +1,68 @@
+-- Behaviour Tree
+
+o Blackboard
+    + Stores temporary data that nodes can use for current context
+    + Dictionary (string, object pair)
+    + Nodes can access these pairs or modify them
+
+o Tree
+
+o BaseNode
+    + States: Success, Failure, Running
+    + Evaluate()
+
+o CompositeNode
+    + Can contain several child nodes
+    x Sequence : BaseNode
+        + Runs from first to last node
+        + While running through children returns RUNNING
+        + Returns SUCCESS if every other node was successful
+        + Return FAILED if one node fails
+    x Selector : BaseNode
+        + If child node returns FAILED, it will traverse to the next one
+        + If all child nodes FAILED, Selector node will also return FAILED
+        + If child node returns SUCCESS, it will stick to this child node
+
+o Decorators
+    + Has a single child node
+        x Examples
+            + Inverter
+            + Succeeder
+            + Repeater
+            + Repeat until fail
+
+o LeafNode  : BaseNode
+    x Can not contain child nodes
+    x Executes the Action
+    x Can be abstract
+        + e.g. GetSafeLocation and Walk node
+        + GetSafeLocation returns a position
+        + Walk uses that position like Walk(character, position)
+    x Functions:
+        + Init:
+            Gets called first time entering node
+            Used to retrieve parameters and execute action
+        + Process:
+            Will be called every tick while RUNNING
+            Returns SUCCESS and FAILURE, if FAILURE result will be passed to parent node
+
+o UtiltyNodes : LeafNode
+    + Nodes that can be additionally used to make some basic programming operations more easy
+    x PushToStack (item, stackVar)
+        Creates a new stack if one doesn’t exist, and stores it in the passed variable name, 
+        and then pushes ‘item’ object onto it.
+    x PopFromStack(stack, itemVar)
+        pop pops an item off the stack, and stores it in the itemVar variable, 
+        failing if the stack is already empty
+    x IsEmpty (stack)
+        Checks if the stack passed is empty and returns success if it is, 
+        and failure if its not.
+    x SetVariable (varName, object)
+    x IsNull (object)
+
+    ==> For example:
+        1. GetDoorStackFromBuilding: Getting all doors the player can enter
+        2. PopFromStackDoor(door): Get each door
+        3. WalkThroughDoorAction: Go through the door
+        4. SetVariable (door, usedDoors): Say that you walked through this door
+        5. IsNull (usedDoors): Check if we used all the doors

@@ -30,3 +30,4 @@ Utility AI too sophisticated for this project, too many options for just a few a
 Links:
 https://hub.packtpub.com/building-your-own-basic-behavior-tree-tutorial/
 https://hub.packtpub.com/ai-for-game-developers/
+https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php
