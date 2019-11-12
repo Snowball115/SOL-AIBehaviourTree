@@ -103,5 +103,6 @@ public class AI : MonoBehaviour
     void Update ()
     {
         // Run your AI code in here
+        // AI.run();
     }
 }

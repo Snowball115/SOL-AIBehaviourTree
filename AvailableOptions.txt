@@ -1,0 +1,28 @@
+-- Available options
+
+==== not really ====
+
+o Switch Case (probably not)
+
+o State Machine (not sure right now)
+
+o Utility AI (presumably too much for this project)
+
+==== more likely ====
+
+o Decision Tree
+
+o Behaviour Tree (maybe this)
+    x Blackboard
+    x BaseNode
+        + States: Success, Failure, Running
+        + Evaluate()
+    x Sequence : BaseNode
+    x Selector : BaseNode
+    x Action   : BaseNode
+    x Decorators???
+
+
+Behaviour Tree: 
+More reasonable and flexible options instead of decision Tree (Selector and Sequence).
+Utility AI too sophisticated for this project, too many options for just a few actions.
