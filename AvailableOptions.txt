@@ -26,3 +26,7 @@ o Behaviour Tree (maybe this)
 Behaviour Tree: 
 More reasonable and flexible options instead of decision Tree (Selector and Sequence).
 Utility AI too sophisticated for this project, too many options for just a few actions.
+
+Links:
+https://hub.packtpub.com/building-your-own-basic-behavior-tree-tutorial/
+https://hub.packtpub.com/ai-for-game-developers/
