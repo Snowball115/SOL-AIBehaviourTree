@@ -13,12 +13,12 @@ o BaseNode
 
 o CompositeNode
     + Can contain several child nodes
-    x Sequence : BaseNode
+    x Sequence : CompositeNode
         + Runs from first to last node
         + While running through children returns RUNNING
         + Returns SUCCESS if every other node was successful
         + Return FAILED if one node fails
-    x Selector : BaseNode
+    x Selector : CompositeNode
         + If child node returns FAILED, it will traverse to the next one
         + If all child nodes FAILED, Selector node will also return FAILED
         + If child node returns SUCCESS, it will stick to this child node
