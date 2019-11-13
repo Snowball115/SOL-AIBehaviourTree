@@ -13,8 +13,7 @@ public abstract class BaseNode
 
     private NodeState currentState;
 
-    public BaseNode()
-    {}
+    public BaseNode() {}
 
-    public abstract void Evaluate();
+    //public abstract void Evaluate();
 }
