@@ -4,16 +4,20 @@ using UnityEngine;
 
 public abstract class BaseNode
 {
-    enum NodeState
+    public enum NodeState
     {
         SUCCESS,
         FAILURE,
         RUNNING
     };
 
-    private NodeState currentState;
+    protected NodeState currentState;
 
     public BaseNode() {}
 
-    //public abstract void Evaluate();
+    public NodeState GetState() => currentState;
+
+    public void SetState(NodeState newState) => currentState = newState;
+
+    public abstract void Evaluate();
 }

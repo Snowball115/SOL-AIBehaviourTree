@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Action : BaseNode
+public abstract class Decorator : BaseNode
 {
-    
+    protected BaseNode chileNode;
 }

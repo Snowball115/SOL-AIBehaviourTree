@@ -88,6 +88,7 @@ public class AI : MonoBehaviour
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
 
+    private BehaviourTree myTree;
 
     // Use this for initialization
     void Start ()
@@ -103,6 +104,6 @@ public class AI : MonoBehaviour
     void Update ()
     {
         // Run your AI code in here
-        // AI.run();
+        myTree.Traverse();
     }
 }
