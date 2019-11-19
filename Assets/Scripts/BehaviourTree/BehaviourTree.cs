@@ -9,9 +9,6 @@ public class BehaviourTree
     public BehaviourTree(BaseNode rootNode)
     {
         root = rootNode;
-
-        // Build and connect nodes here
-
     }
 
     public void Traverse()

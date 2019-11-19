@@ -88,7 +88,21 @@ public class AI : MonoBehaviour
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
 
+    // Behaviour Tree
     private BehaviourTree myTree;
+    private Sequence sequenceMoveTo;
+
+    public void InitBehaviourTree()
+    {
+        sequenceMoveTo = new Sequence();
+
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
+        //sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
+
+        myTree = new BehaviourTree(sequenceMoveTo);
+    }
 
     // Use this for initialization
     void Start ()
@@ -98,6 +112,8 @@ public class AI : MonoBehaviour
         _agentActions = GetComponent<AgentActions>();
         _agentSenses = GetComponentInChildren<Sensing>();
         _agentInventory = GetComponentInChildren<InventoryController>();
+
+        InitBehaviourTree();
     }
 
     // Update is called once per frame

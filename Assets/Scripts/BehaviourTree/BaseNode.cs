@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class BaseNode
 {
@@ -19,5 +20,5 @@ public abstract class BaseNode
 
     public void SetState(NodeState newState) => currentState = newState;
 
-    public abstract void Evaluate();
+    public abstract NodeState Evaluate();
 }
