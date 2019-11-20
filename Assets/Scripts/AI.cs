@@ -97,9 +97,9 @@ public class AI : MonoBehaviour
         sequenceMoveTo = new Sequence();
 
         sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
-        //sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
+        //sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        //sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
+        sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
 
         myTree = new BehaviourTree(sequenceMoveTo);
     }

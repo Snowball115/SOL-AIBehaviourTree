@@ -15,19 +15,17 @@ public class GoToPos : Action
 
     public override NodeState Evaluate()
     {
-        if (agent.transform.position != newPos)
-        {
-            actions.MoveTo(newPos);
-            return NodeState.RUNNING;
-        }
-
-        else if (Vector3.Distance(agent.transform.position, newPos) <= 10) 
+        if (Vector3.Distance(agent.transform.position, newPos) <= 5)
         {
             Debug.Log("Success");
             return NodeState.SUCCESS;
         }
 
-        Debug.Log(currentState.ToString());
+        Debug.Log("Running");
+        actions.MoveTo(newPos);
+        return NodeState.RUNNING;
+
+        Debug.Log(GetState().ToString());
         return NodeState.FAILURE;
     }
 }
