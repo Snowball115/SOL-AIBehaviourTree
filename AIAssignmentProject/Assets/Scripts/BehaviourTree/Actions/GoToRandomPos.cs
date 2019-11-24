@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoToRandomPos : Action
+public class GoToRandomPos : LeafNode
 {
     private AgentActions actions;
 
@@ -11,10 +11,12 @@ public class GoToRandomPos : Action
         this.actions = actions;
     }
 
-    public override NodeState Evaluate()
+    public override IEnumerator Evaluate()
     {
         actions.MoveToRandomLocation();
 
-        return NodeState.SUCCESS;
+        SetState(NodeState.SUCCESS);
+
+        yield return null;
     }
 }

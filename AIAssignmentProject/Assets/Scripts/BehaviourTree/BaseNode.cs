@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class BaseNode
 {
+
     public enum NodeState
     {
         SUCCESS,
@@ -20,5 +18,5 @@ public abstract class BaseNode
 
     public void SetState(NodeState newState) => currentState = newState;
 
-    public abstract NodeState Evaluate();
+    public abstract IEnumerator Evaluate();
 }

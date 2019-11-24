@@ -2,46 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BehaviourTree : MonoBehaviour
+public class BehaviourTree
 {
+    // MonoBehaviour component for coroutine use in other nodes
+    private MonoBehaviour mb { get; set; }
+
     // The node our tree starts with
     private BaseNode rootNode;
 
-    // Nodes in our BehaviourTree
-    private List<BaseNode> cachedNodes;
-
-    // Our main task which evaluates all nodes
-    private IEnumerator mainLoop;
-
-    private void Awake()
+    public BehaviourTree(BaseNode rootNode, MonoBehaviour mb)
     {
-        cachedNodes = new List<BaseNode>();
+        Debug.Log("<color=green>[BehaviourTree]</color> Tree created");
+
+        this.rootNode = rootNode;
+
+        this.mb = mb;
     }
 
-    public void StartTree()
+    public void Traverse()
     {
-        mainLoop = Traverse();
-        StartCoroutine(mainLoop);
+        mb.StartCoroutine(rootNode.Evaluate());
     }
-
-    public void StopTree()
-    {
-        StopCoroutine(mainLoop);
-        mainLoop = null;
-    }
-
-    private IEnumerator Traverse()
-    {
-        yield return null;
-    }
-
-    //public BehaviourTree(BaseNode rootNode)
-    //{
-    //    this.rootNode = rootNode;
-    //}
-
-    //public void Traverse()
-    //{
-    //    rootNode.Evaluate();
-    //}
 }

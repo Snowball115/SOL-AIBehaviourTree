@@ -1,45 +1,46 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sequence : CompositeNode
 {
-    private bool isEvaluatingNode;
-
-    public override NodeState Evaluate()
+    public override IEnumerator Evaluate()
     {
-        isEvaluatingNode = false;
-
-        // Set own state to running while running through child nodes
         SetState(NodeState.RUNNING);
 
-        for (int i = 0; i < childNodes.Count; i++)
+        while (currentState == NodeState.RUNNING)
         {
-            //Debug.Log(string.Format("{0} {1}", i, childNodes[i].GetState().ToString()));
-            
-            // Run and check state of each node that we are evaluating
-            switch (childNodes[i].Evaluate())
+            isAnyNodeEvaluating = false;
+
+            for (int i = 0; i < childNodes.Count; i++)
             {
-                // Current node we are evaluating
-                case NodeState.RUNNING:
-                    isEvaluatingNode = true;
-                    continue;
+                childNodes[i].SetState(NodeState.RUNNING);
 
-                // Go to next node if previous node was successful
-                case NodeState.SUCCESS:
-                    continue;
+                isAnyNodeEvaluating = true;
 
-                // Set own state to failure if one node fails
-                case NodeState.FAILURE:
-                    SetState(NodeState.FAILURE);
-                    return currentState;
+                while (childNodes[i].GetState() == NodeState.RUNNING)
+                {
+                    // Check if node fails
+                    if (childNodes[i].GetState() == NodeState.FAILURE)
+                    {
+                        SetState(NodeState.FAILURE);
+                        yield break;
+                    }
+
+                    // Evaluate the current node
+                    else
+                    {
+                        yield return childNodes[i].Evaluate();
+                    }
+                }
+
+                if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
             }
+
+            // Check if nodes are still evaluating
+            if (isAnyNodeEvaluating) SetState(NodeState.RUNNING);
+            else SetState(NodeState.SUCCESS);
+
+            yield return null;
         }
-
-        // Check if we are currently processing a node and when not, we are finished
-        if (isEvaluatingNode) SetState(NodeState.RUNNING);
-        else SetState(NodeState.SUCCESS);
-
-        return currentState;
     }
 }

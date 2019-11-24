@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-
-public class GoToPos : Action
+﻿using System.Collections;
+using UnityEngine;
+public class GoToPos : LeafNode
 {
     private AI agent;
     private AgentActions actions;
@@ -13,19 +13,15 @@ public class GoToPos : Action
         this.newPos = newPos;
     }
 
-    public override NodeState Evaluate()
+    public override IEnumerator Evaluate()
     {
-        if (Vector3.Distance(agent.transform.position, newPos) <= 5)
+        actions.MoveTo(newPos);
+
+        if (Vector3.Distance(agent.transform.position, newPos) <= 5) 
         {
-            Debug.Log("Success");
-            return NodeState.SUCCESS;
+            SetState(NodeState.SUCCESS); 
         }
 
-        Debug.Log("Running");
-        actions.MoveTo(newPos);
-        return NodeState.RUNNING;
-
-        Debug.Log(GetState().ToString());
-        return NodeState.FAILURE;
+        yield return null;
     }
 }

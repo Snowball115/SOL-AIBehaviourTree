@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public abstract class CompositeNode : BaseNode
 {
     protected List<BaseNode> childNodes;
+
+    protected bool isAnyNodeEvaluating;
 
     public CompositeNode()
     {

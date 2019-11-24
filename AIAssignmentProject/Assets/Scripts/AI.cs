@@ -88,24 +88,8 @@ public class AI : MonoBehaviour
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
 
-    // Behaviour Tree
     private BehaviourTree myTree;
 
-    public void InitBehaviourTree()
-    {
-        myTree = FindObjectOfType<BehaviourTree>();
-
-        Sequence sequenceMoveTo = new Sequence();
-
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
-        //sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
-
-        myTree.StartTree();
-    }
-
-    // Use this for initialization
     void Start ()
     {
         // Initialise the accessable script components
@@ -117,10 +101,22 @@ public class AI : MonoBehaviour
         InitBehaviourTree();
     }
 
-    // Update is called once per frame
-    void Update ()
+    public void InitBehaviourTree()
     {
-        // Run your AI code in here
-        //myTree.Traverse();
+        Sequence seqRandom = new Sequence();
+        seqRandom.AddNode(new GoToRandomPos(_agentActions));
+
+        Sequence sequenceMoveTo = new Sequence();
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+        sequenceMoveTo.AddNode(new Wait(1));
+        sequenceMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
+
+        Selector selectorMoveTo = new Selector();
+        selectorMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        selectorMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+
+        myTree = new BehaviourTree(seqRandom, this);
+
+        myTree.Traverse();
     }
 }

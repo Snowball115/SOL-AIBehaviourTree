@@ -4,34 +4,42 @@ using UnityEngine;
 
 public class Selector : CompositeNode
 {
-    public override NodeState Evaluate()
+    public override IEnumerator Evaluate()
     {
-        for (int i = 0; i < childNodes.Count; i++)
-        {
-            // Set own state to running while running through child nodes
-            SetState(NodeState.RUNNING);
+        SetState(NodeState.RUNNING);
 
-            // Check state of each node that we are evaluating
-            switch (childNodes[i].Evaluate())
+        while (currentState == NodeState.RUNNING)
+        {
+            isAnyNodeEvaluating = false;
+
+            for (int i = 0; i < childNodes.Count; i++)
             {
-                // Current node we are evaluating
-                case NodeState.RUNNING:
-                    continue;
-                // Go to next node if previous node was successful
-                case NodeState.SUCCESS:
-                    continue;
-                // Set own state to failure if one node fails
-                case NodeState.FAILURE:
-                    SetState(NodeState.FAILURE);
-                    return currentState;
+                childNodes[i].SetState(NodeState.RUNNING);
+
+                isAnyNodeEvaluating = true;
+
+                while (childNodes[i].GetState() == NodeState.RUNNING)
+                {
+                    if (childNodes[i].GetState() == NodeState.SUCCESS)
+                    {
+                        SetState(NodeState.SUCCESS);
+                        yield break;
+                    }
+
+                    else
+                    {
+                        yield return childNodes[i].Evaluate();
+                    }
+                }
+
+                if (childNodes[i].GetState() == NodeState.SUCCESS) yield break;
             }
 
-            // Return state for the out of for-loop return state
-            // this simply says if we are currently processing a node and when not, we are finished
-            if (i < childNodes.Count) currentState = NodeState.RUNNING;
-            else currentState = NodeState.SUCCESS;
-        }
+            // Check if nodes are still evaluating
+            if (isAnyNodeEvaluating) SetState(NodeState.RUNNING);
+            else SetState(NodeState.FAILURE);
 
-        return currentState;
+            yield return null;
+        }
     } 
 }
