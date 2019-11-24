@@ -10,17 +10,27 @@ public class BehaviourTree
     // The node our tree starts with
     private BaseNode rootNode;
 
+    // The main coroutine that enters the first node
+    private IEnumerator mainLoop;
+
     public BehaviourTree(BaseNode rootNode, MonoBehaviour mb)
     {
-        Debug.Log("<color=green>[BehaviourTree]</color> Tree created");
-
+        Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree created", mb.gameObject.name);
         this.rootNode = rootNode;
-
         this.mb = mb;
     }
 
     public void Traverse()
     {
-        mb.StartCoroutine(rootNode.Evaluate());
+        Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree started", mb.gameObject.name);
+        mainLoop = rootNode.Evaluate();
+        mb.StartCoroutine(mainLoop);
+    }
+
+    public void StopTree()
+    {
+        Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree stopped", mb.gameObject.name);
+        mb.StopCoroutine(mainLoop);
+        mainLoop = null;
     }
 }

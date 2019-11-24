@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackNearbyEnemy : LeafNode
+public class IsEnemyInSight : LeafNode
 {
     private Sensing senses;
-    private AgentActions actions;
 
-    public AttackNearbyEnemy(Sensing senses, AgentActions actions)
+    public IsEnemyInSight(Sensing senses)
     {
         this.senses = senses;
-        this.actions = actions;
     }
 
     public override IEnumerator Evaluate()
@@ -24,16 +22,8 @@ public class AttackNearbyEnemy : LeafNode
             SetState(NodeState.FAILURE);
         }
 
-        for (int i = 0; i < nearbyEnemies.Count; i++)
-        {
-            if (senses.IsInAttackRange(nearbyEnemies[i]))
-            {
-                actions.AttackEnemy(nearbyEnemies[i]);
-            }
-        }
-
         SetState(NodeState.SUCCESS);
-        
+
         yield return null;
     }
 }

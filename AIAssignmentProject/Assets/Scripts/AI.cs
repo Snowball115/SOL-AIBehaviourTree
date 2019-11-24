@@ -103,19 +103,22 @@ public class AI : MonoBehaviour
 
     public void InitBehaviourTree()
     {
-        Sequence seqRandom = new Sequence();
-        seqRandom.AddNode(new GoToRandomPos(_agentActions));
+        Sequence seqMoveTo = new Sequence();
+        Sequence seqMoveTo2 = new Sequence();
+        Selector selectMoveTo = new Selector();
 
-        Sequence sequenceMoveTo = new Sequence();
-        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        sequenceMoveTo.AddNode(new Wait(1));
-        sequenceMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
+        seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+        seqMoveTo.AddNode(new Wait(1));
+        seqMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
+        seqMoveTo.AddNode(seqMoveTo2);
 
-        Selector selectorMoveTo = new Selector();
-        selectorMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        selectorMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
 
-        myTree = new BehaviourTree(seqRandom, this);
+        selectMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        selectMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+
+        myTree = new BehaviourTree(seqMoveTo, this);
 
         myTree.Traverse();
     }

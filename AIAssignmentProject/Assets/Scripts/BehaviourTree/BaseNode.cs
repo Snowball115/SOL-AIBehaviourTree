@@ -2,7 +2,6 @@
 
 public abstract class BaseNode
 {
-
     public enum NodeState
     {
         SUCCESS,
