@@ -90,18 +90,19 @@ public class AI : MonoBehaviour
 
     // Behaviour Tree
     private BehaviourTree myTree;
-    private Sequence sequenceMoveTo;
 
     public void InitBehaviourTree()
     {
-        sequenceMoveTo = new Sequence();
+        myTree = FindObjectOfType<BehaviourTree>();
+
+        Sequence sequenceMoveTo = new Sequence();
 
         sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        //sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        //sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
-        sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
+        sequenceMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
+        //sequenceMoveTo.AddNode(new GoToRandomPos(_agentActions));
 
-        myTree = new BehaviourTree(sequenceMoveTo);
+        myTree.StartTree();
     }
 
     // Use this for initialization
@@ -120,6 +121,6 @@ public class AI : MonoBehaviour
     void Update ()
     {
         // Run your AI code in here
-        myTree.Traverse();
+        //myTree.Traverse();
     }
 }
