@@ -107,11 +107,11 @@ public class AI : MonoBehaviour
         Sequence seqMoveTo2 = new Sequence();
         Selector selectMoveTo = new Selector();
 
-        //seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        //seqMoveTo.AddNode(new Wait(2));
-        //seqMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
+        seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
+        seqMoveTo.AddNode(new Wait(2));
+        seqMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
         seqMoveTo.AddNode(seqMoveTo2);
-        seqMoveTo.AddNode(new RepeaterCountable(seqMoveTo2, 2));
+        seqMoveTo.AddNode(new Repeater(seqMoveTo));
 
         seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
         seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));

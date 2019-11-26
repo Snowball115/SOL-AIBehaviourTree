@@ -4,8 +4,6 @@ public abstract class CompositeNode : BaseNode
 {
     protected List<BaseNode> childNodes;
 
-    protected bool isAnyNodeEvaluating;
-
     public CompositeNode()
     {
         childNodes = new List<BaseNode>();

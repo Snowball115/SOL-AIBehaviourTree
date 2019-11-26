@@ -2,8 +2,6 @@
 
 public abstract class BaseNode
 {
-    private IEnumerator nodeCode;
-
     public enum NodeState
     {
         SUCCESS,
@@ -21,6 +19,7 @@ public abstract class BaseNode
 
     protected abstract IEnumerator Execute();
 
+    // This kinda resets the node if we want to evaluate it again
     public IEnumerator Evaluate()
     {
         IEnumerator ie = Execute();
