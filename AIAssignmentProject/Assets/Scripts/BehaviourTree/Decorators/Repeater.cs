@@ -11,8 +11,6 @@ public class Repeater : Decorator
 
     protected override IEnumerator Execute()
     {
-        if (node.GetState() == NodeState.SUCCESS | node.GetState() == NodeState.FAILURE) yield return node.Evaluate();
-
-        yield return null;
+        yield return node.Evaluate();
     }
 }

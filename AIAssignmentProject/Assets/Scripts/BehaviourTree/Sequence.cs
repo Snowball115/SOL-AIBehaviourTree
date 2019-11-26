@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class Sequence : CompositeNode
 {
@@ -27,5 +28,7 @@ public class Sequence : CompositeNode
         yield return null;
 
         SetState(NodeState.SUCCESS);
+
+        Debug.Log(GetState().ToString());
     }
 }
