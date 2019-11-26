@@ -18,7 +18,7 @@ public class RepeaterCountable : Decorator
     {
         while (counter <= repeatCount)
         {
-            if (node.GetState() == NodeState.SUCCESS | node.GetState() == NodeState.FAILURE) yield return node.Evaluate();
+            yield return node.Evaluate();
             counter++;
         }
 
