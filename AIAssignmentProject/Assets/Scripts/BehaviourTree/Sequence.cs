@@ -28,7 +28,5 @@ public class Sequence : CompositeNode
         yield return null;
 
         SetState(NodeState.SUCCESS);
-
-        Debug.Log(GetState().ToString());
     }
 }

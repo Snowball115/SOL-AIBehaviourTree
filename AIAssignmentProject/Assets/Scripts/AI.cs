@@ -110,17 +110,19 @@ public class AI : MonoBehaviour
         seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
         seqMoveTo.AddNode(new Wait(2));
         seqMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
-        seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        //seqMoveTo.AddNode(seqMoveTo2);
+        seqMoveTo.AddNode(seqMoveTo2);
         seqMoveTo.AddNode(new Repeater(seqMoveTo));
 
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 20)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(-17, 0, -20)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(-20, 0, 20)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, 15)));
+        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
+        seqMoveTo2.AddNode(new Repeater(seqMoveTo2));
 
         selectMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, -20)));
         selectMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
 
-        myTree = new BehaviourTree(seqMoveTo, this);
+        myTree = new BehaviourTree(seqMoveTo2, this);
 
         myTree.Traverse();
     }
