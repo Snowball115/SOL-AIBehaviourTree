@@ -105,7 +105,7 @@ public class AI : MonoBehaviour
     {
         Sequence seqMoveTo = new Sequence();
         Sequence seqMoveTo2 = new Sequence();
-        Sequence seqGetFlag = new Sequence();
+        Sequence selecGetFlag = new Sequence();
 
         seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
         seqMoveTo.AddNode(new Wait(2));
@@ -119,10 +119,10 @@ public class AI : MonoBehaviour
         seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
         seqMoveTo2.AddNode(new Repeater(seqMoveTo2));
 
-        seqGetFlag.AddNode(new GoToPos(this, _agentActions, GameObject.FindGameObjectWithTag("Flag").transform.position));
+        selecGetFlag.AddNode(new GoToPos(this, _agentActions, GameObject.Find(Names.RedFlag).transform.position));
 
         // Set root node here
-        myTree = new BehaviourTree(seqGetFlag, this);
+        myTree = new BehaviourTree(selecGetFlag, this);
 
         myTree.Traverse();
     }
