@@ -13,7 +13,7 @@ public class AttackNearbyEnemy : LeafNode
         this.actions = actions;
     }
 
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         List<GameObject> nearbyEnemies = senses.GetEnemiesInView();
 

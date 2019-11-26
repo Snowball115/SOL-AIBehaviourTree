@@ -11,7 +11,7 @@ public class IsEnemyInSight : LeafNode
         this.senses = senses;
     }
 
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         List<GameObject> nearbyEnemies = senses.GetEnemiesInView();
 

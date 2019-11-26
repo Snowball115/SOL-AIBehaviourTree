@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Selector : CompositeNode
 {
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         SetState(NodeState.RUNNING);
 

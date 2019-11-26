@@ -11,7 +11,7 @@ public class GoToRandomPos : LeafNode
         this.actions = actions;
     }
 
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         actions.MoveToRandomLocation();
 

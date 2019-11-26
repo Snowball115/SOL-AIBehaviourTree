@@ -2,6 +2,8 @@
 
 public abstract class BaseNode
 {
+    private IEnumerator nodeCode;
+
     public enum NodeState
     {
         SUCCESS,
@@ -17,5 +19,11 @@ public abstract class BaseNode
 
     public void SetState(NodeState newState) => currentState = newState;
 
-    public abstract IEnumerator Evaluate();
+    protected abstract IEnumerator Execute();
+
+    public IEnumerator Evaluate()
+    {
+        IEnumerator ie = Execute();
+        yield return ie;
+    }
 }

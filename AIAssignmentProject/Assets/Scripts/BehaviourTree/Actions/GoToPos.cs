@@ -6,6 +6,9 @@ public class GoToPos : LeafNode
     private AgentActions actions;
     private Vector3 newPos;
 
+    // Tolerance to target position the agent has to reach to return success
+    private float tolerance = 5;
+
     public GoToPos(AI agent, AgentActions actions, Vector3 newPos)
     {
         this.agent = agent;
@@ -13,11 +16,11 @@ public class GoToPos : LeafNode
         this.newPos = newPos;
     }
 
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         actions.MoveTo(newPos);
 
-        if (Vector3.Distance(agent.transform.position, newPos) <= 5) 
+        if (Vector3.Distance(agent.transform.position, newPos) <= tolerance) 
         {
             SetState(NodeState.SUCCESS); 
         }

@@ -3,44 +3,44 @@ using UnityEngine;
 
 public class Sequence : CompositeNode
 {
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         SetState(NodeState.RUNNING);
 
-        while (currentState == NodeState.RUNNING)
+        //while (currentState == NodeState.RUNNING)
+        //{
+        isAnyNodeEvaluating = false;
+
+        for (int i = 0; i < childNodes.Count; i++)
         {
-            isAnyNodeEvaluating = false;
+            childNodes[i].SetState(NodeState.RUNNING);
 
-            for (int i = 0; i < childNodes.Count; i++)
+            while (childNodes[i].GetState() == NodeState.RUNNING)
             {
-                childNodes[i].SetState(NodeState.RUNNING);
+                //isAnyNodeEvaluating = true;
 
-                while (childNodes[i].GetState() == NodeState.RUNNING)
+                // Check if node fails
+                if (childNodes[i].GetState() == NodeState.FAILURE)
                 {
-                    isAnyNodeEvaluating = true;
-
-                    // Check if node fails
-                    if (childNodes[i].GetState() == NodeState.FAILURE)
-                    {
-                        SetState(NodeState.FAILURE);
-                        yield break;
-                    }
-
-                    // Evaluate the current node
-                    else
-                    {
-                        yield return childNodes[i].Evaluate();
-                    }
+                    SetState(NodeState.FAILURE);
+                    yield break;
                 }
 
-                if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
+                // Evaluate the current node
+                yield return childNodes[i].Evaluate();
+
             }
 
-            //// Check if nodes are still evaluating so we dont exit this CompositeNode too early
-            //if (isAnyNodeEvaluating) SetState(NodeState.RUNNING);
-            //else SetState(NodeState.SUCCESS);
-
-            yield return null;
+            //if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
         }
+
+        //// Check if nodes are still evaluating so we dont exit this CompositeNode too early
+        //if (isAnyNodeEvaluating) SetState(NodeState.RUNNING);
+        //else SetState(NodeState.SUCCESS);
+
+        yield return null;
+        //}
+
+        SetState(NodeState.SUCCESS);
     }
 }

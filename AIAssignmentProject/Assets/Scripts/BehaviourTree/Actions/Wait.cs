@@ -11,7 +11,7 @@ public class Wait : LeafNode
         this.seconds = seconds;
     }
 
-    public override IEnumerator Evaluate()
+    protected override IEnumerator Execute()
     {
         yield return new WaitForSeconds(seconds);
 
