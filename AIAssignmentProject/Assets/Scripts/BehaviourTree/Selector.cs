@@ -12,15 +12,15 @@ public class Selector : CompositeNode
 
             while (childNodes[i].GetState() == NodeState.RUNNING)
             {
-                // Check if node successes
+                // Check if node successes and evaluate
                 if (childNodes[i].GetState() == NodeState.SUCCESS)
                 {
                     SetState(NodeState.SUCCESS);
-                    yield break;
+                    yield return childNodes[i].Evaluate();
                 }
 
-                // Evaluate the current node
-                yield return childNodes[i].Evaluate();
+                // Otherwise exit the selector
+                yield break;
             }
         }
 

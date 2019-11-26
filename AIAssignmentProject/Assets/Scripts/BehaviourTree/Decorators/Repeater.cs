@@ -2,15 +2,13 @@
 
 public class Repeater : Decorator
 {
-    private CompositeNode node;
-
-    public Repeater(CompositeNode node)
+    public Repeater(CompositeNode childNode)
     {
-        this.node = node;
+        this.childNode = childNode;
     }
 
     protected override IEnumerator Execute()
     {
-        yield return node.Evaluate();
+        yield return childNode.Evaluate();
     }
 }

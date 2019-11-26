@@ -2,13 +2,12 @@
 
 public class RepeaterCountable : Decorator
 {
-    private CompositeNode node;
     private int counter;
     private int repeatCount;
 
-    public RepeaterCountable(CompositeNode node, int repeatCount)
+    public RepeaterCountable(BaseNode childNode, int repeatCount)
     {
-        this.node = node;
+        this.childNode = childNode;
         this.repeatCount = repeatCount;
 
         counter = 0;
@@ -18,7 +17,7 @@ public class RepeaterCountable : Decorator
     {
         while (counter <= repeatCount)
         {
-            yield return node.Evaluate();
+            yield return childNode.Evaluate();
             counter++;
         }
 
