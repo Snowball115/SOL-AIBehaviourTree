@@ -103,6 +103,10 @@ public class AI : MonoBehaviour
 
     public void InitBehaviourTree()
     {
+        // Setup for some basic GameObjects we may need
+        GameObject redFlag = GameObject.Find(Names.RedFlag);
+        GameObject blueBase = GameObject.Find(Names.BlueBase);
+
         Sequence seqMoveTo = new Sequence();
         Sequence seqMoveInCycle = new Sequence();
         Sequence seqStealFlag = new Sequence();
@@ -118,8 +122,6 @@ public class AI : MonoBehaviour
         seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
         seqMoveInCycle.AddNode(new Repeater(seqMoveInCycle));
 
-        GameObject redFlag = GameObject.Find(Names.RedFlag);
-        GameObject blueBase = GameObject.Find(Names.BlueBase);
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, redFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, redFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position));
@@ -127,6 +129,7 @@ public class AI : MonoBehaviour
         selecGetFlag.AddNode(new GoToPos(this, _agentActions, GameObject.Find(Names.RedFlag).transform.position));
 
         // Set root node here and start tree
+        // Remember to set a Repeater for your root node if its a Sequence or Selector
         myTree = new BehaviourTree(seqStealFlag, this);
         myTree.Traverse();
     }
