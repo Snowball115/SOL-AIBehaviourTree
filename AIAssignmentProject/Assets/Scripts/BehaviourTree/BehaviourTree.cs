@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BehaviourTree
 {
-    // MonoBehaviour component for coroutine use in other nodes
+    // MonoBehaviour component for coroutine use
     private MonoBehaviour mb { get; set; }
 
     // The node our tree starts with

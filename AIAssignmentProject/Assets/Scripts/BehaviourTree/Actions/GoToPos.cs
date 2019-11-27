@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+
 public class GoToPos : LeafNode
 {
     private AI agent;
@@ -7,7 +8,7 @@ public class GoToPos : LeafNode
     private Vector3 newPos;
 
     // Tolerance to target position the agent has to reach to return success
-    private float tolerance = 5;
+    private float tolerance = 1;
 
     public GoToPos(AI agent, AgentActions actions, Vector3 newPos)
     {

@@ -104,26 +104,30 @@ public class AI : MonoBehaviour
     public void InitBehaviourTree()
     {
         Sequence seqMoveTo = new Sequence();
-        Sequence seqMoveTo2 = new Sequence();
+        Sequence seqMoveInCycle = new Sequence();
+        Sequence seqStealFlag = new Sequence();
         Sequence selecGetFlag = new Sequence();
 
         seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
         seqMoveTo.AddNode(new Wait(2));
-        seqMoveTo.AddNode(new AttackNearbyEnemy(_agentSenses, _agentActions));
-        seqMoveTo.AddNode(seqMoveTo2);
-        seqMoveTo.AddNode(new Repeater(seqMoveTo));
+        seqMoveTo.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
 
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(-17, 0, -20)));
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(-20, 0, 20)));
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, 15)));
-        seqMoveTo2.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
-        seqMoveTo2.AddNode(new Repeater(seqMoveTo2));
+        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(-17, 0, -20)));
+        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(-20, 0, 20)));
+        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, 15)));
+        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
+        seqMoveInCycle.AddNode(new Repeater(seqMoveInCycle));
+
+        GameObject redFlag = GameObject.Find(Names.RedFlag);
+        GameObject blueBase = GameObject.Find(Names.BlueBase);
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, redFlag.transform.position));
+        seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, redFlag));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position));
 
         selecGetFlag.AddNode(new GoToPos(this, _agentActions, GameObject.Find(Names.RedFlag).transform.position));
 
-        // Set root node here
-        myTree = new BehaviourTree(selecGetFlag, this);
-
+        // Set root node here and start tree
+        myTree = new BehaviourTree(seqStealFlag, this);
         myTree.Traverse();
     }
 }

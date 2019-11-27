@@ -19,11 +19,12 @@ public class CheckTag : LeafNode
         if (agent.tag == tagToCheck)
         {
             SetState(NodeState.SUCCESS);
+            Debug.Log(GetState());
             yield break;
         }
 
         SetState(NodeState.FAILURE);
-
+        Debug.Log(GetState());
         yield return null;
     }
 }

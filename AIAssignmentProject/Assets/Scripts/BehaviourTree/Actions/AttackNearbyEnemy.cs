@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Stores visible enemies in a list and attacks its nearby enemy
 public class AttackNearbyEnemy : LeafNode
 {
-    private Sensing senses;
     private AgentActions actions;
+    private Sensing senses;
+    private List<GameObject> nearbyEnemies;
 
-    public AttackNearbyEnemy(Sensing senses, AgentActions actions)
+    public AttackNearbyEnemy(AgentActions actions, Sensing senses)
     {
-        this.senses = senses;
         this.actions = actions;
+        this.senses = senses;
     }
 
     protected override IEnumerator Execute()
     {
-        List<GameObject> nearbyEnemies = senses.GetEnemiesInView();
+        nearbyEnemies = senses.GetEnemiesInView();
 
         //for (int i = 0; i < nearbyEnemies.Count; i++) Debug.Log(nearbyEnemies.Count);
 
