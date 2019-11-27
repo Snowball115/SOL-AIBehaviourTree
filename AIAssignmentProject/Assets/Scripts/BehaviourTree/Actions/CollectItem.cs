@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Check if an item is in reach and collect it
 public class CollectItem : LeafNode
 {
     private AgentActions actions;
