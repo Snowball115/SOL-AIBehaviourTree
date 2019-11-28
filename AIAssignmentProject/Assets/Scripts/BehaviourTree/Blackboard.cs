@@ -5,6 +5,7 @@ public static class Blackboard
 {
     private static Dictionary<string, object> blackboardData = new Dictionary<string, object>();
 
+    // Shows what data the Dictionary has stored
     public static void DebugDict()
     {
         foreach (KeyValuePair<string, object> entry in blackboardData)
@@ -13,12 +14,14 @@ public static class Blackboard
         }
     }
 
+    // Adds entry to Dictionary
     public static void AddData(string key, object value)
     {
         if (!ContainsKey(key)) blackboardData.Add(key, value);
         else Debug.Log("[BLACKBOARD] Can't add Key that already exists! Consider using ModifyData() instead.");
     }
 
+    // Removes entry from Dictionary
     public static void RemoveData(string key)
     {
         if (ContainsKey(key)) blackboardData.Remove(key);
