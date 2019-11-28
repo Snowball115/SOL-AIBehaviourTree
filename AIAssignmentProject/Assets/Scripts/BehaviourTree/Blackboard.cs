@@ -1,53 +1,43 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Blackboard : MonoBehaviour
+public static class Blackboard
 {
-    private Dictionary<string, object> blackboardData;
+    private static Dictionary<string, object> blackboardData = new Dictionary<string, object>();
 
-    public void Start()
+    public static void DebugDict()
     {
-        Init();
+        foreach (KeyValuePair<string, object> entry in blackboardData)
+        {
+            Debug.Log(string.Format("{0} {1}", entry.Key, entry.Value));
+        }
     }
 
-    public void Init()
-    {
-        Debug.Log("[BLACKBOARD] Initialization");
-        blackboardData = new Dictionary<string, object>();
-
-        // Add predefined key value pairs here
-        AddData("test", 123);
-        GetData("test");
-        ModifyData("test", 564);
-        GetData("test");
-    }
-
-    public void AddData(string key, object value)
+    public static void AddData(string key, object value)
     {
         if (!ContainsKey(key)) blackboardData.Add(key, value);
         else Debug.Log("[BLACKBOARD] Can't add Key that already exists! Consider using ModifyData() instead.");
     }
 
-    public void RemoveData(string key)
+    public static void RemoveData(string key)
     {
         if (ContainsKey(key)) blackboardData.Remove(key);
         else Debug.Log("[BLACKBOARD] No key to remove!");
     }
 
     // Modify an existing value of key
-    public void ModifyData(string key, object newValue)
+    public static void ModifyData(string key, object newValue)
     {
         blackboardData[key] = newValue;
     }
 
-    // Gives value from key back
-    public object GetData(string key)
+    // Get value from key
+    public static object GetData(string key)
     {
         object tmp = null;
 
         if (blackboardData.TryGetValue(key, out tmp))
         {
-            //Debug.Log(tmp);
             return tmp;
         }
 
@@ -56,7 +46,7 @@ public class Blackboard : MonoBehaviour
     }
 
     // Check if key in dictionary already exists
-    private bool ContainsKey(string key)
+    private static bool ContainsKey(string key)
     {
         object tmp = null;
         return blackboardData.TryGetValue(key, out tmp);

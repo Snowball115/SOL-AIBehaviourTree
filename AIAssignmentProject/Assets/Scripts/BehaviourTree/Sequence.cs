@@ -23,6 +23,9 @@ public class Sequence : CompositeNode
                 // Evaluate the current node
                 yield return childNodes[i].Evaluate();
             }
+
+            // Exit condition for outer loop
+            if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
         }
 
         yield return null;

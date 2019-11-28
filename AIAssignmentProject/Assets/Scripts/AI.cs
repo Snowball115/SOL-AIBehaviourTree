@@ -106,11 +106,11 @@ public class AI : MonoBehaviour
         // Setup for some basic GameObjects we may need
         GameObject redFlag = GameObject.Find(Names.RedFlag);
         GameObject blueBase = GameObject.Find(Names.BlueBase);
+        GameObject redBase = GameObject.Find(Names.RedBase);
 
         Sequence seqMoveTo = new Sequence();
         Sequence seqMoveInCycle = new Sequence();
         Sequence seqStealFlag = new Sequence();
-        Sequence selecGetFlag = new Sequence();
 
         seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
         seqMoveTo.AddNode(new Wait(2));
@@ -122,14 +122,15 @@ public class AI : MonoBehaviour
         seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
         seqMoveInCycle.AddNode(new Repeater(seqMoveInCycle));
 
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, redBase.transform.position, 2));
+        seqStealFlag.AddNode(new ItemInView(this, _agentSenses, redFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, redFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, redFlag));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position));
-
-        selecGetFlag.AddNode(new GoToPos(this, _agentActions, GameObject.Find(Names.RedFlag).transform.position));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position, 2));
+        seqStealFlag.AddNode(new DropItem(_agentActions, redFlag));
 
         // Set root node here and start tree
-        // Remember to set a Repeater for your root node if its a Sequence or Selector
+        // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
         myTree = new BehaviourTree(seqStealFlag, this);
         myTree.Traverse();
     }
