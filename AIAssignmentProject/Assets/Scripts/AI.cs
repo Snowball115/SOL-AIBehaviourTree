@@ -105,6 +105,7 @@ public class AI : MonoBehaviour
     {
         // Setup for some basic GameObjects we may need
         GameObject redFlag = GameObject.Find(Names.RedFlag);
+        GameObject blueFlag = GameObject.Find(Names.BlueFlag);
         GameObject blueBase = GameObject.Find(Names.BlueBase);
         GameObject redBase = GameObject.Find(Names.RedBase);
 
