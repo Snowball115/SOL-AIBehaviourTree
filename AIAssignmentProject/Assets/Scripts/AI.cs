@@ -123,7 +123,7 @@ public class AI : MonoBehaviour
         seqMoveInCycle.AddNode(new Repeater(seqMoveInCycle));
 
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, redBase.transform.position, 2));
-        seqStealFlag.AddNode(new ItemInView(this, _agentSenses, redFlag));
+        seqStealFlag.AddNode(new ItemInView(_agentSenses, redFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, redFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, redFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position, 2));

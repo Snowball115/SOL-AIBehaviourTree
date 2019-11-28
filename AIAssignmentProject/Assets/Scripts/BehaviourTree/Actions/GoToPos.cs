@@ -17,7 +17,7 @@ public class GoToPos : LeafNode
         this.newPos = newPos;
     }
 
-    // Use this constructor if you have problems reaching a specific point on the NavMesh and set own tolerance to reach
+    // Use this constructor to set own tolerance to reach if you have problems reaching a specific point on the NavMesh
     public GoToPos(AI agent, AgentActions actions, Vector3 newPos, float tolerance)
     {
         this.agent = agent;

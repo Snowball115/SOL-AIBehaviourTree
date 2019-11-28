@@ -4,33 +4,34 @@ using UnityEngine;
 
 public class ItemInView : LeafNode
 {
-    private AI agent;
     private Sensing senses;
     private GameObject itemToCheck;
+    private List<GameObject> itemsInView;
 
-    private List<GameObject> collectablesInView;
-
-    public ItemInView(AI agent, Sensing senses, GameObject itemToCheck)
+    public ItemInView(Sensing senses, GameObject itemToCheck)
     {
-        this.agent = agent;
         this.senses = senses;
+        this.itemToCheck = itemToCheck;
     }
 
     protected override IEnumerator Execute()
     {
-        collectablesInView = senses.GetCollectablesInView();
+        itemsInView = senses.GetObjectsInView();
 
-        for (int i = 0; i < collectablesInView.Count; i++)
+        for (int i = 0; i < itemsInView.Count; i++)
         {
-            if (collectablesInView[i] == itemToCheck)
+            Debug.Log(itemsInView[i].ToString());
+        }
+
+        for (int i = 0; i < itemsInView.Count; i++)
+        {
+            if (itemsInView[i] == itemToCheck)
             {
-                Blackboard.AddData(string.Format("{0}", agent.name), itemToCheck);
-                Blackboard.DebugDict();
                 SetState(NodeState.SUCCESS);
                 yield break;
             }
         }
-        Debug.Log("NOT FOUND");
+
         SetState(NodeState.FAILURE);
 
         yield return null;
