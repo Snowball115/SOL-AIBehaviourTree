@@ -20,10 +20,9 @@ o Behaviour Tree (maybe this)
     x Sequence : BaseNode
     x Selector : BaseNode
     x Action   : BaseNode
-    x Decorators???
+    x Decorators : BaseNode
 
-
-Behaviour Tree: 
+Behaviour Tree:
 More reasonable and flexible options instead of decision Tree (Selector and Sequence).
 Utility AI too sophisticated for this project, too many options for just a few actions.
 
