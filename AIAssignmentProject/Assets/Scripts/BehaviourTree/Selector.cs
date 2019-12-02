@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public class Selector : CompositeNode
 {
@@ -12,20 +13,27 @@ public class Selector : CompositeNode
 
             while (childNodes[i].GetState() == NodeState.RUNNING)
             {
-                // Check if node successes and evaluate
+                // Check if node successes
                 if (childNodes[i].GetState() == NodeState.SUCCESS)
                 {
                     SetState(NodeState.SUCCESS);
-                    yield return childNodes[i].Evaluate();
+                    yield break;
                 }
 
-                // Otherwise exit the selector
-                yield break;
+                //if (childNodes[i].GetState() == NodeState.FAILURE)
+                //{
+                //    continue;
+                //}
+
+                // Evaluate the current node
+                yield return childNodes[i].Evaluate();
             }
+
+            if (childNodes[i].GetState() == NodeState.SUCCESS) yield break;
         }
 
-        yield return null;
-
         SetState(NodeState.FAILURE);
+
+        yield return null;
     }
 }

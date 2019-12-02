@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInView : LeafNode
+public class IsItemInView : LeafNode
 {
     private Sensing senses;
     private GameObject itemToCheck;
     private List<GameObject> itemsInView;
 
-    public ItemInView(Sensing senses, GameObject itemToCheck)
+    public IsItemInView(Sensing senses, GameObject itemToCheck)
     {
         this.senses = senses;
         this.itemToCheck = itemToCheck;
@@ -18,10 +18,10 @@ public class ItemInView : LeafNode
     {
         itemsInView = senses.GetObjectsInView();
 
-        for (int i = 0; i < itemsInView.Count; i++)
-        {
-            Debug.Log(itemsInView[i].ToString());
-        }
+        //for (int i = 0; i < itemsInView.Count; i++)
+        //{
+        //    Debug.Log(itemsInView[i].ToString());
+        //}
 
         for (int i = 0; i < itemsInView.Count; i++)
         {
@@ -33,7 +33,7 @@ public class ItemInView : LeafNode
         }
 
         SetState(NodeState.FAILURE);
-
+        
         yield return null;
     }
 }

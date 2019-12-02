@@ -28,8 +28,8 @@ public class Sequence : CompositeNode
             if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
         }
 
-        yield return null;
-
         SetState(NodeState.SUCCESS);
+
+        yield return null;
     }
 }

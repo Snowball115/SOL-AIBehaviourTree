@@ -7,24 +7,35 @@ public class CollectItem : LeafNode
 {
     private AgentActions actions;
     private Sensing senses;
+    private InventoryController inventory;
     private GameObject itemToCollect;
 
-    public CollectItem(AgentActions actions, Sensing senses, GameObject itemToCollect)
+    public CollectItem(AgentActions actions, Sensing senses, InventoryController inventory, GameObject itemToCollect)
     {
         this.actions = actions;
         this.senses = senses;
+        this.inventory = inventory;
         this.itemToCollect = itemToCollect;
     }
 
     protected override IEnumerator Execute()
     {
+        // Fail action if item is out of reach
         if (!senses.IsItemInReach(itemToCollect))
         {
             SetState(NodeState.FAILURE);
+            yield break;
         }
 
         // this method ALSO checks if item is in reach
         actions.CollectItem(itemToCollect);
+
+        // Check if agent acidentally thinks he picked up item but its not in his inventory
+        if (!inventory.HasItem(itemToCollect.name.ToString()))
+        {
+            SetState(NodeState.FAILURE);
+            yield break;
+        }
 
         SetState(NodeState.SUCCESS);
 

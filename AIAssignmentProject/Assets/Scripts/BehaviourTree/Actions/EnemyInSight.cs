@@ -5,6 +5,7 @@ using UnityEngine;
 public class IsEnemyInSight : LeafNode
 {
     private Sensing senses;
+    private List<GameObject> nearbyEnemies;
 
     public IsEnemyInSight(Sensing senses)
     {
@@ -13,7 +14,7 @@ public class IsEnemyInSight : LeafNode
 
     protected override IEnumerator Execute()
     {
-        List<GameObject> nearbyEnemies = senses.GetEnemiesInView();
+        nearbyEnemies = senses.GetEnemiesInView();
 
         //for (int i = 0; i < nearbyEnemies.Count; i++) Debug.Log(nearbyEnemies.Count);
 

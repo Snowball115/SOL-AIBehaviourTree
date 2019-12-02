@@ -18,14 +18,14 @@ public static class Blackboard
     public static void AddData(string key, object value)
     {
         if (!ContainsKey(key)) blackboardData.Add(key, value);
-        else Debug.Log("[BLACKBOARD] Can't add Key that already exists! Consider using ModifyData() instead.");
+        else Debug.LogWarning("[BLACKBOARD] Can't add Key that already exists! Consider using ModifyData() instead.");
     }
 
     // Removes entry from Dictionary
     public static void RemoveData(string key)
     {
         if (ContainsKey(key)) blackboardData.Remove(key);
-        else Debug.Log("[BLACKBOARD] No key to remove!");
+        else Debug.LogWarning("[BLACKBOARD] No key to remove!");
     }
 
     // Modify an existing value of key
@@ -44,7 +44,7 @@ public static class Blackboard
             return tmp;
         }
 
-        Debug.Log("[BLACKBOARD] Data not found");
+        Debug.LogWarning("[BLACKBOARD] Data not found");
         return tmp;
     }
 

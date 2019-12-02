@@ -103,32 +103,51 @@ public class AI : MonoBehaviour
 
     public void InitBehaviourTree()
     {
-        // Setup for some basic GameObjects we may need
-        GameObject redFlag = GameObject.Find(Names.RedFlag);
-        GameObject blueFlag = GameObject.Find(Names.BlueFlag);
-        GameObject blueBase = GameObject.Find(Names.BlueBase);
-        GameObject redBase = GameObject.Find(Names.RedBase);
+        // Save data into the Blackboard we may need for later use
+        Blackboard.AddData(Names.RedFlag, GameObject.Find(Names.RedFlag));
+        Blackboard.AddData(Names.BlueFlag, GameObject.Find(Names.BlueFlag));
+        Blackboard.AddData(Names.BlueBase, GameObject.Find(Names.BlueBase));
+        Blackboard.AddData(Names.RedBase, GameObject.Find(Names.RedBase));
+        Blackboard.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
+        Blackboard.AddData(Names.PowerUp, GameObject.Find(Names.PowerUp));
 
-        Sequence seqMoveTo = new Sequence();
-        Sequence seqMoveInCycle = new Sequence();
+        GameObject redFlagTest = (GameObject)Blackboard.GetData(Names.RedFlag);
+        GameObject blueFlagTest = (GameObject)Blackboard.GetData(Names.BlueFlag);
+
+        GameObject enemyFlag = GameObject.Find(_agentData.EnemyFlagName);
+        GameObject friendlyFlag = GameObject.Find(_agentData.FriendlyFlagName);
+        GameObject enemyBase = _agentData.EnemyBase;
+        GameObject friendlyBase = _agentData.FriendlyBase;
+
+        // Our Composite Nodes
+        Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
+        Sequence seqRecoverFlag = new Sequence();
+        Sequence seqAttack = new Sequence();
 
-        seqMoveTo.AddNode(new GoToPos(this, _agentActions, new Vector3(0, 0, 0)));
-        seqMoveTo.AddNode(new Wait(2));
-        seqMoveTo.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
+        seqAttack.AddNode(new Wait(2));
+        seqAttack.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
 
-        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(-17, 0, -20)));
-        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(-20, 0, 20)));
-        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, 15)));
-        seqMoveInCycle.AddNode(new GoToPos(this, _agentActions, new Vector3(17, 0, -20)));
-        seqMoveInCycle.AddNode(new Repeater(seqMoveInCycle));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2));
+        seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag.transform.position));
+        seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
+        seqStealFlag.AddNode(new DropItem(_agentActions, enemyFlag));
+        seqStealFlag.AddNode(new Repeater(seqStealFlag));
 
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, redBase.transform.position, 2));
-        seqStealFlag.AddNode(new ItemInView(_agentSenses, redFlag));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, redFlag.transform.position));
-        seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, redFlag));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, blueBase.transform.position, 2));
-        seqStealFlag.AddNode(new DropItem(_agentActions, redFlag));
+        Selector selecTest = new Selector();
+        Sequence seqBlueTest = new Sequence();
+        Sequence seqRedTest = new Sequence();
+        Sequence seqThirdTest = new Sequence();
+        selecTest.AddNode(seqBlueTest);
+        selecTest.AddNode(seqRedTest);
+        selecTest.AddNode(seqThirdTest);
+        seqBlueTest.AddNode(new IsAgentInTeamBlue(_agentData));
+        seqBlueTest.AddNode(new GoToPos(this, _agentActions, redFlagTest.transform.position));
+        seqRedTest.AddNode(new GoToPos(this, _agentActions, blueFlagTest.transform.position));
+        seqRedTest.AddNode(new GoToPos(this, _agentActions, Vector3.zero));
+        seqThirdTest.AddNode(new GoToPos(this, _agentActions, Vector3.zero));
 
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
