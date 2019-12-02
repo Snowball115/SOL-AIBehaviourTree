@@ -142,7 +142,8 @@ public class AI : MonoBehaviour
         selecTest.AddNode(seqBlueTest);
         selecTest.AddNode(seqRedTest);
         selecTest.AddNode(seqThirdTest);
-        seqBlueTest.AddNode(new IsAgentInTeamBlue(_agentData));
+        seqBlueTest.AddNode(new Wait(2));
+        seqBlueTest.AddNode(new IsItemInView(_agentSenses, redFlagTest));
         seqBlueTest.AddNode(new GoToPos(this, _agentActions, redFlagTest.transform.position));
         seqRedTest.AddNode(new GoToPos(this, _agentActions, blueFlagTest.transform.position));
         seqRedTest.AddNode(new GoToPos(this, _agentActions, Vector3.zero));
