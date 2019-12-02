@@ -125,7 +125,7 @@ public class AI : MonoBehaviour
         Sequence seqRecoverFlag = new Sequence();
         Sequence seqAttack = new Sequence();
 
-        seqAttack.AddNode(new Wait(2));
+        seqAttack.AddNode(new Wait(1));
         seqAttack.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
 
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2));
@@ -134,7 +134,6 @@ public class AI : MonoBehaviour
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
         seqStealFlag.AddNode(new DropItem(_agentActions, enemyFlag));
-        seqStealFlag.AddNode(new Repeater(seqStealFlag));
 
         Selector selecTest = new Selector();
         Sequence seqBlueTest = new Sequence();
@@ -151,7 +150,7 @@ public class AI : MonoBehaviour
 
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
-        myTree = new BehaviourTree(seqStealFlag, this);
+        myTree = new BehaviourTree(selecTest, this);
         myTree.Traverse();
     }
 }
