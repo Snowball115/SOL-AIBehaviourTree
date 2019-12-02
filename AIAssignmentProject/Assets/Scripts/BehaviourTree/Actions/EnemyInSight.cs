@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Check if the agent sees any enemies
 public class IsEnemyInSight : LeafNode
 {
     private Sensing senses;
@@ -21,6 +22,7 @@ public class IsEnemyInSight : LeafNode
         if (nearbyEnemies.Count <= 0)
         {
             SetState(NodeState.FAILURE);
+            yield break;
         }
 
         SetState(NodeState.SUCCESS);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Checks if an given bool returns true, e.g. for carrying the flag
 public class IsBoolTrue : LeafNode
 {
     private bool boolToCheck;

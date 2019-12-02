@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Waits for an amount of seconds
 public class Wait : LeafNode
 {
     private int seconds;

@@ -1,14 +1,13 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Compares if two positions are on the same location, e.g. is the flag in base currently
 public class ComparePosition : LeafNode
 {
     private Vector3 posA;
     private Vector3 posB;
     private float tolerance;
 
-    // Compare if two positions are on the same location, e.g. is the flag in base currently
     public ComparePosition(Vector3 posA, Vector3 posB, float tolerance)
     {
         this.posA = posA;

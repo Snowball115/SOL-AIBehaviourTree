@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-// Check if Agent is in blue, otherwise he is in red team
+// Check if Agent is in the blue team, otherwise he is in the red team
 public class IsAgentInTeamBlue : LeafNode
 {
     private AgentData data;
@@ -13,6 +13,7 @@ public class IsAgentInTeamBlue : LeafNode
 
     protected override IEnumerator Execute()
     {
+        // Checks if enemy team is equals to the red team
         if (data.EnemyTeam != AgentData.Teams.RedTeam)
         {
             SetState(NodeState.FAILURE);

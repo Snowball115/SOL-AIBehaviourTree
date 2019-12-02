@@ -27,10 +27,9 @@ public class CollectItem : LeafNode
             yield break;
         }
 
-        // this method ALSO checks if item is in reach
         actions.CollectItem(itemToCollect);
 
-        // Check if agent acidentally thinks he picked up item but its not in his inventory
+        // Check if agent acidentally thinks he picked up item but is not actually in his inventory
         if (!inventory.HasItem(itemToCollect.name.ToString()))
         {
             SetState(NodeState.FAILURE);

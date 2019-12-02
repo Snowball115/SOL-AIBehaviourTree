@@ -128,14 +128,16 @@ public class AI : MonoBehaviour
         // Node connections
         selecMainEntry.AddNode(seqStealFlag);
         selecMainEntry.AddNode(seqCarryFlag);
-        selecMainEntry.AddNode(seqRecoverFlag);
+        //selecMainEntry.AddNode(seqRecoverFlag);
         selecMainEntry.AddNode(new Repeater(selecMainEntry));
 
+        AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 1);
         seqAttack.AddNode(new Wait(1));
-        seqAttack.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
+        seqAttack.AddNode(attackNode);
+        seqAttack.AddNode(new RepeatUntilNodeFails(attackNode));
 
         seqStealFlag.AddNode(new ComparePosition(enemyFlag.transform.position, enemyBase.transform.position, 5));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2, attackNode));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
@@ -146,7 +148,7 @@ public class AI : MonoBehaviour
         
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
-        myTree = new BehaviourTree(seqStealFlag, this);
+        myTree = new BehaviourTree(selecMainEntry, this);
         myTree.Traverse();
     }
 }

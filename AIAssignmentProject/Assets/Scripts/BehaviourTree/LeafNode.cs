@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Base class for action nodes
 public abstract class LeafNode : BaseNode
 {
-    protected bool isInterruptible;
+    
 }

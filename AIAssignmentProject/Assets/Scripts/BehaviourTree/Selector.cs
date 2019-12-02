@@ -9,11 +9,12 @@ public class Selector : CompositeNode
 
         for (int i = 0; i < childNodes.Count; i++)
         {
+            // Evaluate node while its running
             childNodes[i].SetState(NodeState.RUNNING);
 
             while (childNodes[i].GetState() == NodeState.RUNNING)
             {
-                // Check if node successes
+                // Check if node successes and exit while loop
                 if (childNodes[i].GetState() == NodeState.SUCCESS)
                 {
                     SetState(NodeState.SUCCESS);
@@ -29,7 +30,11 @@ public class Selector : CompositeNode
                 yield return childNodes[i].Evaluate();
             }
 
-            if (childNodes[i].GetState() == NodeState.SUCCESS) yield break;
+            // Exit condition for outer loop
+            if (childNodes[i].GetState() == NodeState.SUCCESS)
+            {
+                yield break;
+            } 
         }
 
         SetState(NodeState.FAILURE);

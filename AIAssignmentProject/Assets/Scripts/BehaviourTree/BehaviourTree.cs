@@ -15,11 +15,11 @@ public class BehaviourTree
 
     public BehaviourTree(BaseNode rootNode, MonoBehaviour mb)
     {
-        Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree created", mb.gameObject.name);
         this.rootNode = rootNode;
         this.mb = mb;
     }
 
+    // Start the tree
     public void Traverse()
     {
         Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree started", mb.gameObject.name);
@@ -27,6 +27,7 @@ public class BehaviourTree
         mb.StartCoroutine(mainLoop);
     }
 
+    // Stop tree if necessary
     public void StopTree()
     {
         Debug.LogFormat("<b><color=green>[{0}]</color></b> Tree stopped", mb.gameObject.name);

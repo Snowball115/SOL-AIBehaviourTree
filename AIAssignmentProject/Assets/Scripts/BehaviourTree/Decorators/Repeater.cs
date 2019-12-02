@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 
+// Repeats a node
 public class Repeater : Decorator
 {
-    public Repeater(CompositeNode childNode)
+    public Repeater(BaseNode childNode)
     {
         this.childNode = childNode;
     }
