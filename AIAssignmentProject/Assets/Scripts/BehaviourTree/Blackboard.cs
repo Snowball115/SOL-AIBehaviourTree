@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public static class Blackboard
+public class Blackboard
 {
-    private static Dictionary<string, object> blackboardData = new Dictionary<string, object>();
+    private Dictionary<string, object> blackboardData = new Dictionary<string, object>();
 
     // Shows what data the Dictionary has stored
-    public static void DebugDict()
+    public void DebugDict()
     {
         foreach (KeyValuePair<string, object> entry in blackboardData)
         {
@@ -15,27 +15,27 @@ public static class Blackboard
     }
 
     // Adds entry to Dictionary
-    public static void AddData(string key, object value)
+    public void AddData(string key, object value)
     {
         if (!ContainsKey(key)) blackboardData.Add(key, value);
         else Debug.LogWarning("[BLACKBOARD] Can't add Key that already exists! Consider using ModifyData() instead.");
     }
 
     // Removes entry from Dictionary
-    public static void RemoveData(string key)
+    public void RemoveData(string key)
     {
         if (ContainsKey(key)) blackboardData.Remove(key);
         else Debug.LogWarning("[BLACKBOARD] No key to remove!");
     }
 
     // Modify an existing value of key
-    public static void ModifyData(string key, object newValue)
+    public void ModifyData(string key, object newValue)
     {
         blackboardData[key] = newValue;
     }
 
     // Get value from key
-    public static object GetData(string key)
+    public object GetData(string key)
     {
         object tmp = null;
 
@@ -49,7 +49,7 @@ public static class Blackboard
     }
 
     // Check if key in dictionary already exists
-    private static bool ContainsKey(string key)
+    private bool ContainsKey(string key)
     {
         object tmp = null;
         return blackboardData.TryGetValue(key, out tmp);

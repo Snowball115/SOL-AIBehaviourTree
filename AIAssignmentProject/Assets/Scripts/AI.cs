@@ -88,6 +88,7 @@ public class AI : MonoBehaviour
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
 
+    // My behaviour tree object
     private BehaviourTree myTree;
 
     void Start ()
@@ -103,55 +104,49 @@ public class AI : MonoBehaviour
 
     public void InitBehaviourTree()
     {
-        // Save data into the Blackboard we may need for later use
-        Blackboard.AddData(Names.RedFlag, GameObject.Find(Names.RedFlag));
-        Blackboard.AddData(Names.BlueFlag, GameObject.Find(Names.BlueFlag));
-        Blackboard.AddData(Names.BlueBase, GameObject.Find(Names.BlueBase));
-        Blackboard.AddData(Names.RedBase, GameObject.Find(Names.RedBase));
-        Blackboard.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
-        Blackboard.AddData(Names.PowerUp, GameObject.Find(Names.PowerUp));
+        // Save data into the Blackboard and store it in variables we may need for later use
+        Blackboard bb = new Blackboard();
+        bb.AddData(_agentData.EnemyFlagName, GameObject.Find(_agentData.EnemyFlagName));
+        bb.AddData(_agentData.FriendlyFlagName, GameObject.Find(_agentData.FriendlyFlagName));
+        bb.AddData(_agentData.EnemyBase.name, GameObject.Find(_agentData.EnemyBase.name));
+        bb.AddData(_agentData.FriendlyBase.name, GameObject.Find(_agentData.FriendlyBase.name));
+        bb.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
+        bb.AddData(Names.PowerUp,   GameObject.Find(Names.PowerUp));
 
-        GameObject redFlagTest = (GameObject)Blackboard.GetData(Names.RedFlag);
-        GameObject blueFlagTest = (GameObject)Blackboard.GetData(Names.BlueFlag);
-
-        GameObject enemyFlag = GameObject.Find(_agentData.EnemyFlagName);
-        GameObject friendlyFlag = GameObject.Find(_agentData.FriendlyFlagName);
-        GameObject enemyBase = _agentData.EnemyBase;
-        GameObject friendlyBase = _agentData.FriendlyBase;
+        GameObject enemyFlag = (GameObject)bb.GetData(_agentData.EnemyFlagName);
+        GameObject friendlyFlag = (GameObject)bb.GetData(_agentData.FriendlyFlagName);
+        GameObject enemyBase = (GameObject)bb.GetData(_agentData.EnemyBase.name);
+        GameObject friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
 
         // Our Composite Nodes
         Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
+        Sequence seqCarryFlag = new Sequence();
         Sequence seqRecoverFlag = new Sequence();
         Sequence seqAttack = new Sequence();
+
+        // Node connections
+        selecMainEntry.AddNode(seqStealFlag);
+        selecMainEntry.AddNode(seqCarryFlag);
+        selecMainEntry.AddNode(seqRecoverFlag);
+        selecMainEntry.AddNode(new Repeater(selecMainEntry));
 
         seqAttack.AddNode(new Wait(1));
         seqAttack.AddNode(new AttackNearbyEnemy(_agentActions, _agentSenses));
 
+        seqStealFlag.AddNode(new ComparePosition(enemyFlag.transform.position, enemyBase.transform.position, 5));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
-        seqStealFlag.AddNode(new DropItem(_agentActions, enemyFlag));
 
-        Selector selecTest = new Selector();
-        Sequence seqBlueTest = new Sequence();
-        Sequence seqRedTest = new Sequence();
-        Sequence seqThirdTest = new Sequence();
-        selecTest.AddNode(seqBlueTest);
-        selecTest.AddNode(seqRedTest);
-        selecTest.AddNode(seqThirdTest);
-        seqBlueTest.AddNode(new Wait(2));
-        seqBlueTest.AddNode(new IsItemInView(_agentSenses, redFlagTest));
-        seqBlueTest.AddNode(new GoToPos(this, _agentActions, redFlagTest.transform.position));
-        seqRedTest.AddNode(new GoToPos(this, _agentActions, blueFlagTest.transform.position));
-        seqRedTest.AddNode(new GoToPos(this, _agentActions, Vector3.zero));
-        seqThirdTest.AddNode(new GoToPos(this, _agentActions, Vector3.zero));
-
+        seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
+        seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
+        seqCarryFlag.AddNode(new DropItem(_agentActions, enemyFlag));
+        
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
-        myTree = new BehaviourTree(selecTest, this);
+        myTree = new BehaviourTree(seqStealFlag, this);
         myTree.Traverse();
     }
 }

@@ -25,7 +25,10 @@ public class Sequence : CompositeNode
             }
 
             // Exit condition for outer loop
-            if (childNodes[i].GetState() == NodeState.FAILURE) yield break;
+            if (childNodes[i].GetState() == NodeState.FAILURE) 
+            {
+                yield break;
+            }
         }
 
         SetState(NodeState.SUCCESS);
