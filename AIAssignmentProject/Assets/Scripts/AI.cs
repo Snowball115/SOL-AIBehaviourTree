@@ -119,6 +119,7 @@ public class AI : MonoBehaviour
         GameObject friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
 
         // Our Composite Nodes
+        Sequence mainEntryLoop = new Sequence(true);
         Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
         Sequence seqCarryFlag = new Sequence();
@@ -126,10 +127,13 @@ public class AI : MonoBehaviour
         Sequence seqAttack = new Sequence();
 
         // Node connections
+        mainEntryLoop.AddNode(selecMainEntry);
+        mainEntryLoop.AddNode(new Repeater(mainEntryLoop));
+
         selecMainEntry.AddNode(seqStealFlag);
         selecMainEntry.AddNode(seqCarryFlag);
         //selecMainEntry.AddNode(seqRecoverFlag);
-        selecMainEntry.AddNode(new Repeater(selecMainEntry));
+        //selecMainEntry.AddNode(new Repeater(selecMainEntry));
 
         AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 1);
         seqAttack.AddNode(new Wait(1));
@@ -142,13 +146,14 @@ public class AI : MonoBehaviour
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag.transform.position));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
 
-        seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
+        seqCarryFlag.AddNode(new IsBoolTrue(true));
+        //seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
         seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
         seqCarryFlag.AddNode(new DropItem(_agentActions, enemyFlag));
         
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
-        myTree = new BehaviourTree(selecMainEntry, this);
+        myTree = new BehaviourTree(mainEntryLoop, this);
         myTree.Traverse();
     }
 }

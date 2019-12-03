@@ -10,32 +10,39 @@ public class Selector : CompositeNode
         for (int i = 0; i < childNodes.Count; i++)
         {
             // Evaluate node while its running
-            childNodes[i].SetState(NodeState.RUNNING);
+            //childNodes[i].SetState(NodeState.RUNNING);
 
+            // Evaluate node while its running
             while (childNodes[i].GetState() == NodeState.RUNNING)
             {
-                // Check if node successes and exit while loop
-                if (childNodes[i].GetState() == NodeState.SUCCESS)
-                {
-                    SetState(NodeState.SUCCESS);
-                    yield break;
-                }
-
-                //if (childNodes[i].GetState() == NodeState.FAILURE)
+                //// Check if node successes and exit while loop
+                //if (childNodes[i].GetState() == NodeState.SUCCESS)
                 //{
-                //    continue;
+                //    SetState(NodeState.SUCCESS);
+                //    Debug.Log("SUCESS ONE");
+                //    yield break;
                 //}
 
                 // Evaluate the current node
                 yield return childNodes[i].Evaluate();
             }
 
+            //// Continue evaluating if one node fails
+            //if (childNodes[i].GetState() == NodeState.FAILURE)
+            //{
+            //    continue;
+            //}
+
             // Exit condition for outer loop
             if (childNodes[i].GetState() == NodeState.SUCCESS)
             {
+                SetState(NodeState.SUCCESS);
+                Debug.Log("SELECTOR SUCCESS");
                 yield break;
-            } 
+            }
         }
+
+        //if (isRepeatable) this.Evaluate();
 
         SetState(NodeState.FAILURE);
 
