@@ -13,6 +13,8 @@ public class Wait : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         yield return new WaitForSeconds(seconds);
 
         SetState(NodeState.SUCCESS);

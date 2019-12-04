@@ -8,8 +8,6 @@ public abstract class CompositeNode : BaseNode
     public CompositeNode()
     {
         childNodes = new List<BaseNode>();
-
-        SetState(NodeState.RUNNING);
     }
 
     // Adds a node to its list

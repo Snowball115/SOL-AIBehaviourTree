@@ -4,11 +4,11 @@ using UnityEngine;
 // Compares if two positions are on the same location, e.g. is the flag in base currently
 public class ComparePosition : LeafNode
 {
-    private Vector3 posA;
-    private Vector3 posB;
+    private GameObject posA;
+    private GameObject posB;
     private float tolerance;
 
-    public ComparePosition(Vector3 posA, Vector3 posB, float tolerance)
+    public ComparePosition(GameObject posA, GameObject posB, float tolerance)
     {
         this.posA = posA;
         this.posB = posB;
@@ -17,7 +17,9 @@ public class ComparePosition : LeafNode
 
     protected override IEnumerator Execute()
     {
-        if (Vector3.Distance(posA, posB) > tolerance)
+        SetState(NodeState.RUNNING);
+
+        if (Vector3.Distance(posA.transform.position, posB.transform.position) > tolerance)
         {
             SetState(NodeState.FAILURE);
             yield break;

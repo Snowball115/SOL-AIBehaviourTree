@@ -15,6 +15,8 @@ public class IsEnemyInSight : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         nearbyEnemies = senses.GetEnemiesInView();
 
         //for (int i = 0; i < nearbyEnemies.Count; i++) Debug.Log(nearbyEnemies.Count);

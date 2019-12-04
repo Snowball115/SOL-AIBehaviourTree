@@ -16,6 +16,8 @@ public class DropItem : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         // This method already checks if item is in agents inventory
         actions.DropItem(itemToDrop);
 

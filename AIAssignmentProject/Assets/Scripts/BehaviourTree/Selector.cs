@@ -5,12 +5,14 @@ public class Selector : CompositeNode
 {
     protected override IEnumerator Execute()
     {
+        Debug.Log("ENTERING SELECTOR");
+
         SetState(NodeState.RUNNING);
 
         for (int i = 0; i < childNodes.Count; i++)
         {
             // Evaluate node while its running
-            //childNodes[i].SetState(NodeState.RUNNING);
+            childNodes[i].SetState(NodeState.RUNNING);
 
             // Evaluate node while its running
             while (childNodes[i].GetState() == NodeState.RUNNING)
@@ -27,11 +29,11 @@ public class Selector : CompositeNode
                 yield return childNodes[i].Evaluate();
             }
 
-            //// Continue evaluating if one node fails
-            //if (childNodes[i].GetState() == NodeState.FAILURE)
-            //{
-            //    continue;
-            //}
+            // Continue evaluating if one node fails
+            if (childNodes[i].GetState() == NodeState.FAILURE)
+            {
+                continue;
+            }
 
             // Exit condition for outer loop
             if (childNodes[i].GetState() == NodeState.SUCCESS)

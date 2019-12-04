@@ -112,6 +112,8 @@ public class AI : MonoBehaviour
         bb.AddData(_agentData.FriendlyBase.name, GameObject.Find(_agentData.FriendlyBase.name));
         bb.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
         bb.AddData(Names.PowerUp,   GameObject.Find(Names.PowerUp));
+        bb.AddData("EnemyFlagHolder", null);
+        bb.AddData("FriendlyFlagHolder", null);
 
         GameObject enemyFlag = (GameObject)bb.GetData(_agentData.EnemyFlagName);
         GameObject friendlyFlag = (GameObject)bb.GetData(_agentData.FriendlyFlagName);
@@ -119,12 +121,16 @@ public class AI : MonoBehaviour
         GameObject friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
 
         // Our Composite Nodes
-        Sequence mainEntryLoop = new Sequence(true);
+        Sequence mainEntryLoop = new Sequence();
         Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
         Sequence seqCarryFlag = new Sequence();
-        Sequence seqRecoverFlag = new Sequence();
         Sequence seqAttack = new Sequence();
+
+        Sequence seqRecoverFlag = new Sequence();
+        Selector selecRecoverFlag = new Selector();
+        Sequence seqRecoverPathA = new Sequence();
+        Sequence seqRecoverPathB = new Sequence();
 
         // Node connections
         mainEntryLoop.AddNode(selecMainEntry);
@@ -132,25 +138,36 @@ public class AI : MonoBehaviour
 
         selecMainEntry.AddNode(seqStealFlag);
         selecMainEntry.AddNode(seqCarryFlag);
-        //selecMainEntry.AddNode(seqRecoverFlag);
-        //selecMainEntry.AddNode(new Repeater(selecMainEntry));
+        selecMainEntry.AddNode(seqRecoverFlag);
 
         AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 1);
-        seqAttack.AddNode(new Wait(1));
         seqAttack.AddNode(attackNode);
         seqAttack.AddNode(new RepeatUntilNodeFails(attackNode));
 
-        seqStealFlag.AddNode(new ComparePosition(enemyFlag.transform.position, enemyBase.transform.position, 5));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase.transform.position, 2, attackNode));
+        seqStealFlag.AddNode(new ComparePosition(enemyFlag, enemyBase, 5));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, attackNode));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag.transform.position));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag));
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
 
-        seqCarryFlag.AddNode(new IsBoolTrue(true));
-        //seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
-        seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase.transform.position, 2));
+        //seqCarryFlag.AddNode(new IsBoolTrue(true));
+        seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
+        seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
         seqCarryFlag.AddNode(new DropItem(_agentActions, enemyFlag));
-        
+
+        seqRecoverFlag.AddNode(new ComparePosition(friendlyFlag, friendlyBase, 5));
+        seqRecoverFlag.AddNode(selecRecoverFlag);
+        selecRecoverFlag.AddNode(seqRecoverPathA);
+        selecRecoverFlag.AddNode(seqRecoverPathB);
+
+        //seqRecoverPathA.AddNode(new SetBBData());
+        seqRecoverPathA.AddNode(new GoToPos(this, _agentActions, (GameObject)bb.GetData("EnemyFlagHolder")));
+        seqRecoverPathA.AddNode(attackNode);
+
+        seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, enemyFlag));
+        seqRecoverPathB.AddNode(new IsItemInView(_agentSenses, enemyFlag));
+        seqRecoverPathB.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
+
         // Set root node here and start tree
         // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
         myTree = new BehaviourTree(mainEntryLoop, this);

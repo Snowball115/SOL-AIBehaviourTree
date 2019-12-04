@@ -20,6 +20,8 @@ public class AttackNearbyEnemy : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         nearbyEnemies = senses.GetEnemiesInView();
 
         // If no enemy visible exit node

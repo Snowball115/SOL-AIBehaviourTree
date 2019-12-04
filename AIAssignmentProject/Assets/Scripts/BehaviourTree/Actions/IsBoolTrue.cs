@@ -14,6 +14,8 @@ public class IsBoolTrue : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         if (!boolToCheck)
         {
             SetState(NodeState.FAILURE);

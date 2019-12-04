@@ -13,6 +13,8 @@ public class IsAgentInTeamBlue : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         // Checks if enemy team is equals to the red team
         if (data.EnemyTeam != AgentData.Teams.RedTeam)
         {

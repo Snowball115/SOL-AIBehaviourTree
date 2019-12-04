@@ -17,6 +17,8 @@ public class IsItemInView : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         itemsInView = senses.GetObjectsInView();
 
         //for (int i = 0; i < itemsInView.Count; i++)

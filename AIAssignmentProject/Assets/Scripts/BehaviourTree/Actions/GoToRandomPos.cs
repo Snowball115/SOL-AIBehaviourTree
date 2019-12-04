@@ -12,6 +12,8 @@ public class GoToRandomPos : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         actions.MoveToRandomLocation();
 
         SetState(NodeState.SUCCESS);

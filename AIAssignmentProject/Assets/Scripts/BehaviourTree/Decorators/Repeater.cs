@@ -10,6 +10,8 @@ public class Repeater : Decorator
 
     protected override IEnumerator Execute()
     {
+        UnityEngine.Debug.LogFormat("Repeating {0}", childNode.GetType());
+
         yield return childNode.Evaluate();
     }
 }

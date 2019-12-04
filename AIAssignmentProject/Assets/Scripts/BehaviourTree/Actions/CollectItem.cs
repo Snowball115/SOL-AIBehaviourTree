@@ -20,6 +20,8 @@ public class CollectItem : LeafNode
 
     protected override IEnumerator Execute()
     {
+        SetState(NodeState.RUNNING);
+
         // Fail action if item is out of reach
         if (!senses.IsItemInReach(itemToCollect))
         {
