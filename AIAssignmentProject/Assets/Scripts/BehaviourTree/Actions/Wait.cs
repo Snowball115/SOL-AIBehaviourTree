@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+// ********************
 // Waits for an amount of seconds
+// ********************
 public class Wait : LeafNode
 {
-    private int seconds;
+    private float seconds;
 
-    public Wait(int seconds)
+    public Wait(float seconds)
     {
         this.seconds = seconds;
     }

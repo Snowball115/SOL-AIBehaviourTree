@@ -10,14 +10,17 @@ public static class PlayerCache
     private static GameObject redFlagCarrier;
 
     // Look if agent is in blue or red team
-    public static GameObject GetFlagCarrier(GameObject baseComparison)
+    public static GameObject GetEnemyFlagCarrier(GameObject baseComparison)
     {
-        switch (baseComparison.name)
+        if (baseComparison != null)
         {
-            case Names.RedBase:
-                return GetBlueFlagCarrier();
-            case Names.BlueBase:
-                return GetRedFlagCarrier();
+            switch (baseComparison.name)
+            {
+                case Names.RedBase:
+                    return GetBlueFlagCarrier();
+                case Names.BlueBase:
+                    return GetRedFlagCarrier();
+            }
         }
 
         return null;
@@ -25,12 +28,16 @@ public static class PlayerCache
 
     public static void SetBlueFlagCarrier(GameObject carrier)
     {
-        blueFlagCarrier = carrier;
+        if (carrier != null)
+            blueFlagCarrier = carrier;
+        else blueFlagCarrier = null;
     }
 
     public static void SetRedFlagCarrier(GameObject carrier)
     {
-        redFlagCarrier = carrier;
+        if (carrier != null)
+            redFlagCarrier = carrier;
+        else redFlagCarrier = null;
     }
 
     public static GameObject GetBlueFlagCarrier()

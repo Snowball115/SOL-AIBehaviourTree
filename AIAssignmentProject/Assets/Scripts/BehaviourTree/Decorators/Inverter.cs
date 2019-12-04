@@ -10,10 +10,19 @@ public class Inverter : Decorator
 
     protected override IEnumerator Execute()
     {
-        if (childNode.GetState() == NodeState.FAILURE) 
-            childNode.SetState(NodeState.SUCCESS);
+        //UnityEngine.Debug.LogFormat("Inverting {0}", childNode.GetType().Name);
 
-        else childNode.SetState(NodeState.FAILURE);
+        yield return childNode.Evaluate();
+
+        if (childNode.GetState() == NodeState.FAILURE)
+        {
+            SetState(NodeState.SUCCESS);
+        }
+
+        else 
+        {
+            SetState(NodeState.FAILURE);
+        } 
 
         yield return null;
     }

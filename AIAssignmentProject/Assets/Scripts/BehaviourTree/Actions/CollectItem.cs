@@ -41,8 +41,17 @@ public class CollectItem : LeafNode
             yield break;
         }
 
-        if (itemToCollect.name == Names.BlueFlag) PlayerCache.SetBlueFlagCarrier(agent.GetComponent<GameObject>());
-        else if (itemToCollect.name == Names.RedFlag) PlayerCache.SetRedFlagCarrier(agent.GetComponent<GameObject>());
+        if (itemToCollect.name == Names.BlueFlag)
+        {
+            PlayerCache.SetBlueFlagCarrier(agent.gameObject);
+        }
+        else if (itemToCollect.name == Names.RedFlag)
+        {
+            PlayerCache.SetRedFlagCarrier(agent.gameObject);
+        }
+
+        Debug.Log(PlayerCache.GetBlueFlagCarrier().ToString());
+        Debug.Log(PlayerCache.GetRedFlagCarrier().ToString());
 
         SetState(NodeState.SUCCESS);
 
