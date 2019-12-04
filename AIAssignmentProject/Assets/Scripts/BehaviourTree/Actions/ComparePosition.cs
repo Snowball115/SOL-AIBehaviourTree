@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+// ********************
 // Compares if two positions are on the same location, e.g. is the flag in base currently
+// ********************
 public class ComparePosition : LeafNode
 {
     private GameObject posA;

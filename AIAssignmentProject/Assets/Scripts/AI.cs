@@ -104,7 +104,9 @@ public class AI : MonoBehaviour
 
     public void InitBehaviourTree()
     {
-        // Save data into the Blackboard and store it in variables we may need for later use
+        // ********************
+        // Save data into Blackboard and store it in variables we may need for later use
+        // ********************
         Blackboard bb = new Blackboard();
         bb.AddData(_agentData.EnemyFlagName, GameObject.Find(_agentData.EnemyFlagName));
         bb.AddData(_agentData.FriendlyFlagName, GameObject.Find(_agentData.FriendlyFlagName));
@@ -120,7 +122,9 @@ public class AI : MonoBehaviour
         GameObject enemyBase = (GameObject)bb.GetData(_agentData.EnemyBase.name);
         GameObject friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
 
-        // Our Composite Nodes
+        // ********************
+        // Composite Nodes
+        // ********************
         Sequence mainEntryLoop = new Sequence();
         Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
@@ -132,7 +136,9 @@ public class AI : MonoBehaviour
         Sequence seqRecoverPathA = new Sequence();
         Sequence seqRecoverPathB = new Sequence();
 
+        // ********************
         // Node connections
+        // ********************
         mainEntryLoop.AddNode(selecMainEntry);
         mainEntryLoop.AddNode(new Repeater(mainEntryLoop));
 
@@ -148,28 +154,31 @@ public class AI : MonoBehaviour
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, attackNode));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag));
-        seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
+        seqStealFlag.AddNode(new CollectItem(this, _agentActions, _agentSenses, _agentInventory, enemyFlag));
 
         //seqCarryFlag.AddNode(new IsBoolTrue(true));
-        seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
+        //seqCarryFlag.AddNode(new IsBoolTrue(_agentData.HasEnemyFlag));
         seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
         seqCarryFlag.AddNode(new DropItem(_agentActions, enemyFlag));
 
-        seqRecoverFlag.AddNode(new ComparePosition(friendlyFlag, friendlyBase, 5));
+        //seqRecoverFlag.AddNode(new Inverter(new ComparePosition(friendlyFlag, friendlyBase, 5)));
         seqRecoverFlag.AddNode(selecRecoverFlag);
         selecRecoverFlag.AddNode(seqRecoverPathA);
         selecRecoverFlag.AddNode(seqRecoverPathB);
 
-        //seqRecoverPathA.AddNode(new SetBBData());
-        seqRecoverPathA.AddNode(new GoToPos(this, _agentActions, (GameObject)bb.GetData("EnemyFlagHolder")));
+        seqRecoverPathA.AddNode(new IsNotNull(PlayerCache.GetFlagCarrier(_agentData.FriendlyBase)));
+        seqRecoverPathA.AddNode(new GoToPos(this, _agentActions, PlayerCache.GetFlagCarrier(_agentData.FriendlyBase)));
         seqRecoverPathA.AddNode(attackNode);
 
         seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, enemyFlag));
         seqRecoverPathB.AddNode(new IsItemInView(_agentSenses, enemyFlag));
-        seqRecoverPathB.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
+        seqRecoverPathB.AddNode(new CollectItem(this, _agentActions, _agentSenses, _agentInventory, enemyFlag));
+        seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
+        seqRecoverPathB.AddNode(new DropItem(_agentActions, friendlyFlag));
 
+        // ********************
         // Set root node here and start tree
-        // Remember to set a Repeater for your root node if its a Sequence or Selector to create a loop
+        // ********************
         myTree = new BehaviourTree(mainEntryLoop, this);
         myTree.Traverse();
     }

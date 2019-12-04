@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+// ******************
 // Moves the agent to a specific position on the NavMesh
+// ******************
 public class GoToPos : LeafNode
 {
     private AI agent;
@@ -43,11 +45,6 @@ public class GoToPos : LeafNode
         SetState(NodeState.RUNNING);
 
         actions.MoveTo(target);
-
-        //if (Vector3.Distance(agent.transform.position, newPos) <= tolerance) 
-        //{
-        //    SetState(NodeState.SUCCESS);
-        //}
 
         while(GetState() == NodeState.RUNNING)
         {

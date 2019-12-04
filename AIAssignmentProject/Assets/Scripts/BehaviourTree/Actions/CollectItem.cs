@@ -1,17 +1,20 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// ********************
 // Check if an item is in reach and collect it
+// ********************
 public class CollectItem : LeafNode
 {
+    private AI agent;
     private AgentActions actions;
     private Sensing senses;
     private InventoryController inventory;
     private GameObject itemToCollect;
 
-    public CollectItem(AgentActions actions, Sensing senses, InventoryController inventory, GameObject itemToCollect)
+    public CollectItem(AI agent, AgentActions actions, Sensing senses, InventoryController inventory, GameObject itemToCollect)
     {
+        this.agent = agent;
         this.actions = actions;
         this.senses = senses;
         this.inventory = inventory;
@@ -37,6 +40,9 @@ public class CollectItem : LeafNode
             SetState(NodeState.FAILURE);
             yield break;
         }
+
+        if (itemToCollect.name == Names.BlueFlag) PlayerCache.SetBlueFlagCarrier(agent.GetComponent<GameObject>());
+        else if (itemToCollect.name == Names.RedFlag) PlayerCache.SetRedFlagCarrier(agent.GetComponent<GameObject>());
 
         SetState(NodeState.SUCCESS);
 

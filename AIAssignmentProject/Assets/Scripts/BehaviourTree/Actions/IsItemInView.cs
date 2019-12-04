@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ********************
 // Checks if the agent can see a specific item
+// ********************
 public class IsItemInView : LeafNode
 {
     private Sensing senses;
@@ -20,11 +22,6 @@ public class IsItemInView : LeafNode
         SetState(NodeState.RUNNING);
 
         itemsInView = senses.GetObjectsInView();
-
-        //for (int i = 0; i < itemsInView.Count; i++)
-        //{
-        //    Debug.Log(itemsInView[i].ToString());
-        //}
 
         // Look if we see the item
         for (int i = 0; i < itemsInView.Count; i++)

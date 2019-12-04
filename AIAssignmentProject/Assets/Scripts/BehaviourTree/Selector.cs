@@ -11,7 +11,6 @@ public class Selector : CompositeNode
 
         for (int i = 0; i < childNodes.Count; i++)
         {
-            // Evaluate node while its running
             childNodes[i].SetState(NodeState.RUNNING);
 
             // Evaluate node while its running

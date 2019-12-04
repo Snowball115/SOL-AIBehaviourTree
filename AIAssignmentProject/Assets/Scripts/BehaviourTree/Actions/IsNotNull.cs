@@ -1,24 +1,23 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // ********************
-// Checks if an given bool returns true, e.g. for carrying the flag
+// Check if an object is not null
 // ********************
-public class IsBoolTrue : LeafNode
+public class IsNotNull : LeafNode
 {
-    private bool boolToCheck;
+    private GameObject objectToCheck;
 
-    public IsBoolTrue(bool boolToCheck)
+    public IsNotNull(GameObject objectToCheck)
     {
-        this.boolToCheck = boolToCheck;
+        this.objectToCheck = objectToCheck;
     }
 
     protected override IEnumerator Execute()
     {
         SetState(NodeState.RUNNING);
 
-        if (!boolToCheck)
+        if (objectToCheck == null)
         {
             SetState(NodeState.FAILURE);
             yield break;
