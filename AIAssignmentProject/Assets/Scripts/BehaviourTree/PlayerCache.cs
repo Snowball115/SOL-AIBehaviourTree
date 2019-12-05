@@ -13,7 +13,7 @@ public static class PlayerCache
     private static AI[] agents = GetAllAgents();
     private static AgentData data;
 
-    // Cache all agents in the scene
+    // Cache all agents that are in the scene
     public static AI[] GetAllAgents()
     {
         return GameObject.FindObjectsOfType<AI>();
@@ -36,8 +36,20 @@ public static class PlayerCache
     }
 
     // Determine if carrier is friendly or not
-    public static GameObject GetEnemyFlagCarrier()
+    public static GameObject GetEnemyFlagCarrier(AI agent)
     {
+        string friendlyFlag = agent._agentData.FriendlyFlagName;
+        string friendlyTeam = agent._agentData.FriendlyTeamTag;
+
+        for (int i = 0; i < agents.Length; i++)
+        {
+            // Team = EnemyTeam (not in the same team) AND Flag carried = FriendlyFlag
+            if (agents[i]._agentData.FriendlyTeamTag != friendlyTeam && agents[i]._agentInventory.HasItem(friendlyFlag))
+            {
+                return agents[i].gameObject;
+            }
+        }
+
         return null;
     } 
 

@@ -79,11 +79,11 @@ using UnityEngine;
 public class AI : MonoBehaviour
 {
     // Gives access to important data about the AI agent (see above)
-    private AgentData _agentData;
+    public AgentData _agentData { get; private set; }
     // Gives access to the agent senses
     private Sensing _agentSenses;
     // gives access to the agents inventory
-    private InventoryController _agentInventory;
+    public InventoryController _agentInventory { get; private set; }
     // This is the script containing the AI agents actions
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
@@ -119,7 +119,7 @@ public class AI : MonoBehaviour
     public void InitBehaviourTree()
     {
         // ********************
-        // Save data into Blackboard and store it in variables we may need for later use
+        // Initialise Blackboard and store data for later use
         // ********************
         bb = new Blackboard();
         bb.AddData(_agentData.EnemyFlagName, GameObject.Find(_agentData.EnemyFlagName));
@@ -128,16 +128,14 @@ public class AI : MonoBehaviour
         bb.AddData(_agentData.FriendlyBase.name, GameObject.Find(_agentData.FriendlyBase.name));
         bb.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
         bb.AddData(Names.PowerUp,   GameObject.Find(Names.PowerUp));
-        //bb.AddData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
         bb.AddData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.AddData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
+        bb.AddData("EnemyFlagCarrier", null);
 
         enemyFlag = (GameObject)bb.GetData(_agentData.EnemyFlagName);
         friendlyFlag = (GameObject)bb.GetData(_agentData.FriendlyFlagName);
         enemyBase = (GameObject)bb.GetData(_agentData.EnemyBase.name);
         friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
-
-        PlayerCache.DebugAgents();
 
         // ********************
         // Composite Nodes
@@ -163,7 +161,7 @@ public class AI : MonoBehaviour
         selecMainEntry.AddNode(seqCarryFlag);
         selecMainEntry.AddNode(seqRecoverFlag);
 
-        AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 1);
+        AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 0.1f);
         seqAttack.AddNode(attackNode);
         seqAttack.AddNode(new RepeatUntilNodeFails(attackNode));
 
@@ -206,6 +204,8 @@ public class AI : MonoBehaviour
     {
         bb.ModifyData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.ModifyData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
-        bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier());
+        bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(this));
+
+        enemyFlagCarrier = (GameObject)bb.GetData("EnemyFlagCarrier");
     }
 }

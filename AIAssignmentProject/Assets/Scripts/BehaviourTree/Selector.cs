@@ -43,8 +43,6 @@ public class Selector : CompositeNode
             }
         }
 
-        //if (isRepeatable) this.Evaluate();
-
         SetState(NodeState.FAILURE);
 
         yield return null;

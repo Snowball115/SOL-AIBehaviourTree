@@ -42,7 +42,6 @@ public class CollectItem : LeafNode
         }
 
         PlayerCache.SetFlagCarriers(itemToCollect);
-        PlayerCache.DebugFlagCarriers();
 
         SetState(NodeState.SUCCESS);
 
