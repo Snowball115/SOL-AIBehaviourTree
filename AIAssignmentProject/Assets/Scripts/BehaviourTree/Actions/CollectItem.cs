@@ -6,15 +6,13 @@ using UnityEngine;
 // ********************
 public class CollectItem : LeafNode
 {
-    private AI agent;
     private AgentActions actions;
     private Sensing senses;
     private InventoryController inventory;
     private GameObject itemToCollect;
 
-    public CollectItem(AI agent, AgentActions actions, Sensing senses, InventoryController inventory, GameObject itemToCollect)
+    public CollectItem(AgentActions actions, Sensing senses, InventoryController inventory, GameObject itemToCollect)
     {
-        this.agent = agent;
         this.actions = actions;
         this.senses = senses;
         this.inventory = inventory;

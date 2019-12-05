@@ -180,7 +180,7 @@ public class AI : MonoBehaviour
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, seqAttack));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag));
-        seqStealFlag.AddNode(new CollectItem(this, _agentActions, _agentSenses, _agentInventory, enemyFlag));
+        seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
 
         seqCarryFlag.AddNode(new IsCarryingEnemyFlag(_agentData));
         seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
@@ -197,7 +197,7 @@ public class AI : MonoBehaviour
 
         seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, friendlyFlag));
         seqRecoverPathB.AddNode(new IsItemInView(_agentSenses, friendlyFlag));
-        seqRecoverPathB.AddNode(new CollectItem(this, _agentActions, _agentSenses, _agentInventory, friendlyFlag));
+        seqRecoverPathB.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, friendlyFlag));
         seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
         seqRecoverPathB.AddNode(new DropItem(_agentActions, friendlyFlag));
 
