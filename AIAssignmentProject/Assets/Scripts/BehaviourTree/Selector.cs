@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+// ******************
+// Sequence: Iterates through nodes until one success
+// ******************
 public class Selector : CompositeNode
 {
     protected override IEnumerator Execute()

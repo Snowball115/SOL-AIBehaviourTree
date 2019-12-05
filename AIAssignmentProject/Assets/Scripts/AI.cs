@@ -166,7 +166,7 @@ public class AI : MonoBehaviour
         seqAttack.AddNode(new RepeatUntilNodeFails(attackNode));
 
         seqStealFlag.AddNode(new ComparePosition(enemyFlag, enemyBase, 5));
-        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, attackNode));
+        seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, seqAttack));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyFlag));
         seqStealFlag.AddNode(new CollectItem(this, _agentActions, _agentSenses, _agentInventory, enemyFlag));
