@@ -6,6 +6,7 @@ using UnityEngine;
 // ******************
 public class Sequence : CompositeNode
 {
+    // need this to loop the first sequence in tree, so the AI repeats the whole tree
     private bool IsIgnoringStates;
 
     public Sequence() { }
@@ -38,7 +39,7 @@ public class Sequence : CompositeNode
                 yield return childNodes[i].Evaluate();
             }
 
-            // Exit condition for outer loop
+            // Exit condition
             if (childNodes[i].GetState() == NodeState.FAILURE && !IsIgnoringStates) 
             {
                 Debug.Log("SEQUENCE FAILED");

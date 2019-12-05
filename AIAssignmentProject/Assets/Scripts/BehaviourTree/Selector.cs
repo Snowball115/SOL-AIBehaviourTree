@@ -37,7 +37,7 @@ public class Selector : CompositeNode
             //    continue;
             //}
 
-            // Exit condition for outer loop
+            // Exit condition
             if (childNodes[i].GetState() == NodeState.SUCCESS)
             {
                 SetState(NodeState.SUCCESS);

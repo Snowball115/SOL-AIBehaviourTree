@@ -43,7 +43,7 @@ public static class PlayerCache
 
         for (int i = 0; i < agents.Length; i++)
         {
-            // Team = EnemyTeam (not in the same team) AND Flag carried = FriendlyFlag
+            // Team != Same team AND Flag carried = FriendlyFlag ==>> Enemy
             if (agents[i]._agentData.FriendlyTeamTag != friendlyTeam && agents[i]._agentInventory.HasItem(friendlyFlag))
             {
                 return agents[i].gameObject;
