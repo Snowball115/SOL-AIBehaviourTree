@@ -88,7 +88,9 @@ public class AI : MonoBehaviour
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
 
-    // My behaviour tree object
+    // ******************** 
+    // My behaviour tree objects
+    // ********************
     private BehaviourTree myTree;
     private Blackboard bb;
 
@@ -197,10 +199,13 @@ public class AI : MonoBehaviour
         myTree.Traverse();
     }
 
+    // ********************
+    // Update variables in our Blackboard that might change during runtime
+    // ********************
     private void UpdateBlackboardData()
     {
         bb.ModifyData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.ModifyData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
-        //bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
+        bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier());
     }
 }
