@@ -140,7 +140,7 @@ public class AI : MonoBehaviour
         // ********************
         // Composite Nodes
         // ********************
-        Sequence mainEntryLoop = new Sequence();
+        Sequence mainEntryLoop = new Sequence(true);
         Selector selecMainEntry = new Selector();
         Sequence seqStealFlag = new Sequence();
         Sequence seqCarryFlag = new Sequence();

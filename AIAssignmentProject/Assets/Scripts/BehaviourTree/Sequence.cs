@@ -6,6 +6,15 @@ using UnityEngine;
 // ******************
 public class Sequence : CompositeNode
 {
+    private bool IsIgnoringStates;
+
+    public Sequence() { }
+
+    public Sequence(bool IsIgnoringStates) 
+    {
+        this.IsIgnoringStates = IsIgnoringStates;
+    }
+
     protected override IEnumerator Execute()
     {
         SetState(NodeState.RUNNING);
@@ -30,7 +39,7 @@ public class Sequence : CompositeNode
             }
 
             // Exit condition for outer loop
-            if (childNodes[i].GetState() == NodeState.FAILURE) 
+            if (childNodes[i].GetState() == NodeState.FAILURE && !IsIgnoringStates) 
             {
                 Debug.Log("SEQUENCE FAILED");
                 SetState(NodeState.FAILURE);
