@@ -21,7 +21,7 @@ public static class PlayerCache
     {
         for (int i = 0; i < agents.Length; i++)
         {
-            if ()
+            if (data.)
         }
     }
 }
