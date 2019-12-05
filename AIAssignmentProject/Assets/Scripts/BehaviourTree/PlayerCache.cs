@@ -38,13 +38,13 @@ public static class PlayerCache
     // Determine if carrier is friendly or not
     public static GameObject GetEnemyFlagCarrier(AI agent)
     {
-        string friendlyFlag = agent._agentData.FriendlyFlagName;
-        string friendlyTeam = agent._agentData.FriendlyTeamTag;
+        string friendlyFlag = agent.AIAgentData.FriendlyFlagName;
+        string friendlyTeam = agent.AIAgentData.FriendlyTeamTag;
 
         for (int i = 0; i < agents.Length; i++)
         {
             // Team != Same team AND Flag carried = FriendlyFlag ==>> Enemy
-            if (agents[i]._agentData.FriendlyTeamTag != friendlyTeam && agents[i]._agentInventory.HasItem(friendlyFlag))
+            if (agents[i].AIAgentData.FriendlyTeamTag != friendlyTeam && agents[i].AIInventory.HasItem(friendlyFlag))
             {
                 return agents[i].gameObject;
             }

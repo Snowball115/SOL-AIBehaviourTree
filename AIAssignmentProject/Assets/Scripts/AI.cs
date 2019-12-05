@@ -79,14 +79,25 @@ using UnityEngine;
 public class AI : MonoBehaviour
 {
     // Gives access to important data about the AI agent (see above)
-    public AgentData _agentData { get; private set; }
+    private AgentData _agentData;
     // Gives access to the agent senses
     private Sensing _agentSenses;
     // gives access to the agents inventory
-    public InventoryController _agentInventory { get; private set; }
+    private InventoryController _agentInventory;
     // This is the script containing the AI agents actions
     // e.g. agentScript.MoveTo(enemy);
     private AgentActions _agentActions;
+
+    // Need to get these two variables for PlayerCache class (getting current flag carriers)
+    public AgentData AIAgentData
+    {
+        get { return _agentData; }
+    }
+
+    public InventoryController AIInventory
+    {
+        get { return _agentInventory; }
+    }
 
     // ******************** 
     // My behaviour tree objects

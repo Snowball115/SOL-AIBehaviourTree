@@ -8,7 +8,7 @@ public class Selector : CompositeNode
 {
     protected override IEnumerator Execute()
     {
-        Debug.Log("ENTERING SELECTOR");
+        //Debug.Log("ENTERING SELECTOR");
 
         SetState(NodeState.RUNNING);
 
