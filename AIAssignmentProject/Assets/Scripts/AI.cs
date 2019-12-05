@@ -126,7 +126,7 @@ public class AI : MonoBehaviour
         bb.AddData(_agentData.FriendlyBase.name, GameObject.Find(_agentData.FriendlyBase.name));
         bb.AddData(Names.HealthKit, GameObject.Find(Names.HealthKit));
         bb.AddData(Names.PowerUp,   GameObject.Find(Names.PowerUp));
-        bb.AddData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
+        //bb.AddData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
         bb.AddData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.AddData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
 
@@ -199,6 +199,6 @@ public class AI : MonoBehaviour
     {
         bb.ModifyData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.ModifyData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
-        bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
+        //bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(_agentData.FriendlyBase));
     }
 }

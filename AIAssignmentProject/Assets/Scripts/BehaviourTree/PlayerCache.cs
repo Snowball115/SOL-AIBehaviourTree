@@ -6,47 +6,22 @@ using System.Linq;
 // Little hack to determine which agent is carrying a flag
 public static class PlayerCache
 {
-    private static GameObject blueFlagCarrier;
-    private static GameObject redFlagCarrier;
+    public static GameObject BlueFlagCarrier;
+    public static GameObject RedFlagCarrier;
 
-    // Look if agent is in blue or red team
-    public static GameObject GetEnemyFlagCarrier(GameObject baseComparison)
+    private static AI[] agents = GetAllAgents();
+    private static AgentData data;
+
+    public static AI[] GetAllAgents()
     {
-        if (baseComparison != null)
+        return GameObject.FindObjectsOfType<AI>();
+    }
+
+    public static void SetFlagCarriers()
+    {
+        for (int i = 0; i < agents.Length; i++)
         {
-            switch (baseComparison.name)
-            {
-                case Names.RedBase:
-                    return GetBlueFlagCarrier();
-                case Names.BlueBase:
-                    return GetRedFlagCarrier();
-            }
+            if ()
         }
-
-        return null;
-    }
-
-    public static void SetBlueFlagCarrier(GameObject carrier)
-    {
-        if (carrier != null)
-            blueFlagCarrier = carrier;
-        else blueFlagCarrier = null;
-    }
-
-    public static void SetRedFlagCarrier(GameObject carrier)
-    {
-        if (carrier != null)
-            redFlagCarrier = carrier;
-        else redFlagCarrier = null;
-    }
-
-    public static GameObject GetBlueFlagCarrier()
-    {
-        return blueFlagCarrier;
-    }
-
-    public static GameObject GetRedFlagCarrier()
-    {
-        return redFlagCarrier;
     }
 }
