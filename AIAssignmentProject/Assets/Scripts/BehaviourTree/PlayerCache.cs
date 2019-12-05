@@ -17,11 +17,32 @@ public static class PlayerCache
         return GameObject.FindObjectsOfType<AI>();
     }
 
-    public static void SetFlagCarriers()
+    public static void DebugAgents()
     {
         for (int i = 0; i < agents.Length; i++)
         {
-            if (data.)
+            Debug.Log(agents[i].ToString());
+        }
+    }
+
+    public static void DebugFlagCarriers()
+    {
+        //Debug.LogFormat("RED: {0}", RedFlagCarrier.name);
+        //Debug.LogFormat("BLUE: {0}", BlueFlagCarrier.name);
+    }
+
+    public static void SetFlagCarriers(GameObject flag)
+    {
+        for (int i = 0; i < agents.Length; i++)
+        {
+            if (flag.name == Names.BlueFlag)
+            {
+                BlueFlagCarrier = agents[i].gameObject;
+            }
+            if (flag.name == Names.RedBase)
+            {
+                RedFlagCarrier = agents[i].gameObject;
+            }
         }
     }
 }

@@ -44,10 +44,10 @@ public class GoToPos : LeafNode
     {
         SetState(NodeState.RUNNING);
 
-        actions.MoveTo(target);
-
         while(GetState() == NodeState.RUNNING)
         {
+            actions.MoveTo(target);
+
             if (interruptableAction != null)
             {
                 interruptableAction.Evaluate();

@@ -135,6 +135,8 @@ public class AI : MonoBehaviour
         enemyBase = (GameObject)bb.GetData(_agentData.EnemyBase.name);
         friendlyBase = (GameObject)bb.GetData(_agentData.FriendlyBase.name);
 
+        PlayerCache.DebugAgents();
+
         // ********************
         // Composite Nodes
         // ********************
