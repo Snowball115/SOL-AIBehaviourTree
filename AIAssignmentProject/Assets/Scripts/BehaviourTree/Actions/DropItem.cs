@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// ********************
 // Drop an item on agents position
+// ********************
 public class DropItem : LeafNode
 {
     private AgentActions actions;

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+// ********************
+// Blackboard class
+// ********************
 public class Blackboard
 {
     private Dictionary<string, object> blackboardData = new Dictionary<string, object>();

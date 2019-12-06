@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ******************
 // Check if the agent sees any enemies
+// ******************
 public class IsEnemyInSight : LeafNode
 {
     private Sensing senses;

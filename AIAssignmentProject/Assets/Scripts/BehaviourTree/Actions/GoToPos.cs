@@ -68,8 +68,6 @@ public class GoToPos : LeafNode
             {
                 // Usually do attacking stuff here but it does not work
                 if (attackAction != null) attackAction.Evaluate();
-                //SetState(NodeState.SUCCESS);
-                //yield break;
             }
             else
             {

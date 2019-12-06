@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 
-// Agent goes to a random position on NavMesh (just for testing purposes)
+// *******************
+// Agent goes to random position on NavMesh
+// *******************
 public class GoToRandomPos : LeafNode
 {
     private AgentActions actions;

@@ -185,6 +185,8 @@ public class AI : MonoBehaviour
         seqStealFlag.AddNode(new CollectItem(_agentActions, _agentSenses, _agentInventory, enemyFlag));
 
         seqCarryFlag.AddNode(new IsCarryingEnemyFlag(_agentData));
+        seqCarryFlag.AddNode(new GoToRandomPos(_agentActions));
+        seqCarryFlag.AddNode(new Wait(1));
         seqCarryFlag.AddNode(new GoToPos(this, _agentActions, friendlyBase, 2));
         seqCarryFlag.AddNode(new DropItem(_agentActions, enemyFlag));
 

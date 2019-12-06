@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ******************
 // Stores visible enemies in a list and attacks its nearby enemy
+// ******************
 public class AttackNearbyEnemy : LeafNode
 {
     private AgentActions actions;

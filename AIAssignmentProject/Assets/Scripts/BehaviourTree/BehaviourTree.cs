@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// ****************
+// Main Behaviour Tree class to start the traverse process
+// ****************
 public class BehaviourTree
 {
     // MonoBehaviour component for coroutine use

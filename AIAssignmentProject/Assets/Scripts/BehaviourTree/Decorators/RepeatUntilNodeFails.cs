@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 
-// Evaluates a node until it fails
+// ******************
+// Evaluates node until it fails
+// ******************
 public class RepeatUntilNodeFails : Decorator
 {
     public RepeatUntilNodeFails(BaseNode childNode)

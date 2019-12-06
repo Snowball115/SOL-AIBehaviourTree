@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 
+// ********************
+// Base Node (stores, sets, gets states / executes node)
+// ********************
 public abstract class BaseNode
 {
     // Node states for each node

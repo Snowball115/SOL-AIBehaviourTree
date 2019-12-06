@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 
+// ******************
 // Repeats a node for a number of iterations
+// ******************
 public class RepeaterCountable : Decorator
 {
     private int counter;

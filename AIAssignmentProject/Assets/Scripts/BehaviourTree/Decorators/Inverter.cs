@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 
-// Inverts node
+// ******************
+// Inverts result of node
+// ******************
 public class Inverter : Decorator
 {
     public Inverter(BaseNode childNode)

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 
+// *****************
+// Composite Node (Sequence or Selector)
+// *****************
 public abstract class CompositeNode : BaseNode
 {
-    // The nodes we will iterate
+    // The nodes we will iterate through
     protected List<BaseNode> childNodes;
 
     public CompositeNode()

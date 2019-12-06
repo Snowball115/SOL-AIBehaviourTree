@@ -31,12 +31,6 @@ public class Selector : CompositeNode
                 yield return childNodes[i].Evaluate();
             }
 
-            //// Continue evaluating if one node fails
-            //if (childNodes[i].GetState() == NodeState.FAILURE)
-            //{
-            //    continue;
-            //}
-
             // Exit condition
             if (childNodes[i].GetState() == NodeState.SUCCESS)
             {
