@@ -172,10 +172,12 @@ public class AI : MonoBehaviour
         selecMainEntry.AddNode(seqCarryFlag);
         selecMainEntry.AddNode(seqRecoverFlag);
 
-        AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 0.1f);
+        AttackNearbyEnemy attackNode = new AttackNearbyEnemy(_agentActions, _agentSenses, 0);
         seqAttack.AddNode(attackNode);
         seqAttack.AddNode(new RepeatUntilNodeFails(attackNode));
 
+        seqStealFlag.AddNode(new GoToRandomPos(_agentActions));
+        seqStealFlag.AddNode(new Wait(2));
         seqStealFlag.AddNode(new ComparePosition(enemyFlag, enemyBase, 5));
         seqStealFlag.AddNode(new GoToPos(this, _agentActions, enemyBase, 2, seqAttack));
         seqStealFlag.AddNode(new IsItemInView(_agentSenses, enemyFlag));
