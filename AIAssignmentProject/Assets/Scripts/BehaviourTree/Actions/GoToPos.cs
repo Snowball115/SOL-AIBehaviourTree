@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 // ******************
@@ -8,17 +9,29 @@ public class GoToPos : LeafNode
 {
     private AI agent;
     private AgentActions actions;
-    private GameObject target;
+    private string blackboardEntry;
+    private Blackboard bbData;
     private BaseNode attackAction;
+    private GameObject target;
 
     // Tolerance to target position the agent has to reach, that he doesnt need to be exactly at the transforms position
     private float tolerance = 1;
 
+    // Constructor to initialise target without specific blackboard data
     public GoToPos(AI agent, AgentActions actions, GameObject target)
     {
         this.agent = agent;
         this.actions = actions;
         this.target = target;
+    }
+
+    // Initialise target with a blackboard entry
+    public GoToPos(AI agent, AgentActions actions, string blackboardEntry, Blackboard bbData)
+    {
+        this.agent = agent;
+        this.actions = actions;
+        this.blackboardEntry = blackboardEntry;
+        this.bbData = bbData;
     }
 
     // Use this constructor to set own tolerance to reach if you have problems reaching a specific point on the NavMesh
@@ -44,6 +57,9 @@ public class GoToPos : LeafNode
     {
         SetState(NodeState.RUNNING);
 
+        if (!String.IsNullOrEmpty(blackboardEntry))
+            target = (GameObject)bbData.GetData(blackboardEntry);
+
         while(GetState() == NodeState.RUNNING)
         {
             actions.MoveTo(target);         
@@ -58,6 +74,7 @@ public class GoToPos : LeafNode
             else
             {
                 SetState(NodeState.SUCCESS);
+                Debug.Log("Reached " + target.name);
                 yield break;
             }
 

@@ -141,7 +141,7 @@ public class AI : MonoBehaviour
         bb.AddData(Names.PowerUp,   GameObject.Find(Names.PowerUp));
         bb.AddData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.AddData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
-        bb.AddData("EnemyFlagCarrier", null);
+        bb.AddData("EnemyFlagCarrier", enemyFlagCarrier);
 
         enemyFlag = (GameObject)bb.GetData(_agentData.EnemyFlagName);
         friendlyFlag = (GameObject)bb.GetData(_agentData.FriendlyFlagName);
@@ -191,8 +191,8 @@ public class AI : MonoBehaviour
         selecRecoverFlag.AddNode(seqRecoverPathA);
         selecRecoverFlag.AddNode(seqRecoverPathB);
 
-        seqRecoverPathA.AddNode(new IsNotNull(enemyFlagCarrier));
-        seqRecoverPathA.AddNode(new GoToPos(this, _agentActions, enemyFlagCarrier));
+        seqRecoverPathA.AddNode(new GetEnemyFlagCarrier(this, bb));
+        seqRecoverPathA.AddNode(new GoToPos(this, _agentActions, "EnemyFlagCarrier", bb));
         seqRecoverPathA.AddNode(attackNode);
 
         seqRecoverPathB.AddNode(new GoToPos(this, _agentActions, friendlyFlag));
@@ -215,8 +215,7 @@ public class AI : MonoBehaviour
     {
         bb.ModifyData("HasEnemyFlag", _agentData.HasEnemyFlag);
         bb.ModifyData("HasFriendlyFlag", _agentData.HasFriendlyFlag);
-        bb.ModifyData("EnemyFlagCarrier", PlayerCache.GetEnemyFlagCarrier(this));
-
+        
         enemyFlagCarrier = (GameObject)bb.GetData("EnemyFlagCarrier");
     }
 }

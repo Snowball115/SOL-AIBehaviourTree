@@ -40,8 +40,8 @@ public class Selector : CompositeNode
             // Exit condition
             if (childNodes[i].GetState() == NodeState.SUCCESS)
             {
+                //Debug.Log("SELECTOR SUCCESS");
                 SetState(NodeState.SUCCESS);
-                Debug.Log("SELECTOR SUCCESS");
                 yield break;
             }
         }

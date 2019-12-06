@@ -42,7 +42,7 @@ public class Sequence : CompositeNode
             // Exit condition
             if (childNodes[i].GetState() == NodeState.FAILURE && !IsIgnoringStates) 
             {
-                Debug.Log("SEQUENCE FAILED");
+                //Debug.Log("SEQUENCE FAILED");
                 SetState(NodeState.FAILURE);
                 yield break;
             }
