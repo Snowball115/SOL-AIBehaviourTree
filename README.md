@@ -7,7 +7,8 @@ It also served to understand AI processes more precisely and to compare them wit
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
 
 ## Screenshots
-![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/BehaviourTree.png)
+![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/Screen01.png)
+![Screen02](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/BehaviourTree.png)
 
 ## Useful links
 * https://hub.packtpub.com/ai-for-game-developers/
