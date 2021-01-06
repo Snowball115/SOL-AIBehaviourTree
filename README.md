@@ -8,6 +8,6 @@ The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/B
 ![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/main/Screenshots/BehaviourTree.png)
 
 ## Useful links
-https://hub.packtpub.com/ai-for-game-developers/
-https://hub.packtpub.com/building-your-own-basic-behavior-tree-tutorial/
-https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php
+* https://hub.packtpub.com/ai-for-game-developers/
+* https://hub.packtpub.com/building-your-own-basic-behavior-tree-tutorial/
+* https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php
