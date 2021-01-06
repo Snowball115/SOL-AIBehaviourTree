@@ -1,8 +1,9 @@
 ## Description
-The Behaviour Tree is a very common way to represent AI in video games. 
-In this simple project, which was created at my time at the univsersity, two teams play "capture the flag" against each other.
-Gameplay components and level design were provided by a tutor.
+The Behaviour Tree is a very common way to represent AI in video games.
+This project was an assignment of the AI course, at the time during university.
+Gameplay components and level design were provided by the tutor.
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
+The project is intended to represent two teams playing "Capture the flag" against each other.
 
 ## Screenshots
 ![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/BehaviourTree.png)
