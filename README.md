@@ -5,7 +5,7 @@ Gameplay components and level design were provided by a tutor.
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
 
 ## Screenshots
-![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/main/Screenshots/BehaviourTree.png)
+![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/BehaviourTree.png)
 
 ## Useful links
 * https://hub.packtpub.com/ai-for-game-developers/
