@@ -6,6 +6,8 @@ The project is intended to represent two teams playing "Capture the flag" agains
 It also served to understand AI processes more precisely and to compare them with other AI types.
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
 
+Unity version: 2019.1.5f1
+
 ## Screenshots
 ![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/Screen01.jpg)
 ![Screen02](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/BehaviourTree.png)
