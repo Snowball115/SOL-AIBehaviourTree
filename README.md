@@ -3,7 +3,6 @@ This project was an assignment of the AI course, at the time during university.
 Gameplay components and level design were provided by the tutor.
 The Behaviour Tree is a very common way to represent AI in video games.
 The project is intended to represent two teams playing "Capture the flag" against each other.
-It also served to understand AI processes more precisely and to compare them with other AI types.
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
 
 Unity version: 2019.1.5f1
