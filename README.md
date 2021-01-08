@@ -5,7 +5,7 @@ The Behaviour Tree is a very common way to represent AI in video games.
 The project is intended to represent two teams playing "Capture the flag" against each other.
 The Behaviour Tree scripts can be found at "AIAssignmentProject/Assets/Scripts/BehaviourTree".
 
-Unity version: 2019.1.5f1
+Unity version: 2019.1.5
 
 ## Screenshots
 ![Screen01](https://github.com/Snowball115/SOL-AIBehaviourTree-Assignment/blob/master/Screenshots/Screen01.jpg)
